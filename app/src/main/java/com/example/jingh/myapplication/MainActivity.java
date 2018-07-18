@@ -33,4 +33,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+//    public void initFruits() {
+//        //创建OKHttpClient对象
+//        OKHttpUitls okHttpUitls = new OKHttpUitls();
+//        okHttpUitls.get(appConstant.bookUpdateUrl);
+//
+//        okHttpUitls.setOnOKHttpGetListener(new OKHttpUitls.OKHttpGetListener() {
+//            @Override
+//            public void error(String error) {
+//                Toast.makeText(MainActivity.this,error,Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void success(String json) {
+//                bookList = JSONUtils.GsonToList(json,UpdateBook.class);
+//            }
+//        });
+//    }
+
 }
