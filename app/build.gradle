@@ -32,7 +32,8 @@ dependencies {
     // 网络请求
     compile rootProject.ext.dependencies["okhttp"]
     compile rootProject.ext.dependencies["retrofit"]
-
+    compile rootProject.ext.dependencies["okio"]
+    
 // 图片加载
     compile rootProject.ext.dependencies["picasso"]
 
