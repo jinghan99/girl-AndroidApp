@@ -3,14 +3,9 @@ package com.example.jingh.myapplication.utils;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import okhttp3.*;
 
 import java.io.IOException;
-
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * @ClassName OKHttpUitls
