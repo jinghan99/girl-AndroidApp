@@ -27,4 +27,19 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     testCompile 'junit:junit:4.12'
+
+
+    // 网络请求
+    compile rootProject.ext.dependencies["okhttp"]
+    compile rootProject.ext.dependencies["retrofit"]
+
+// 图片加载
+    compile rootProject.ext.dependencies["picasso"]
+
+    // RxJava
+    compile rootProject.ext.dependencies["rxAndroid"]
+
+    compile rootProject.ext.dependencies["rxJava"]
+    compile rootProject.ext.dependencies["gson"]
+    compile rootProject.ext.dependencies["logger"]
 }
