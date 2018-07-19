@@ -1,5 +1,4 @@
 apply plugin: 'com.android.application'
-
 android {
     compileSdkVersion 25
     buildToolsVersion "28.0.1"
@@ -29,6 +28,8 @@ dependencies {
     testCompile 'junit:junit:4.12'
 
 
+    compile 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
     // 网络请求
     compile rootProject.ext.dependencies["okhttp"]
     compile rootProject.ext.dependencies["retrofit"]
