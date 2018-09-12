@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
         //绑定初始化ButterKnife
 
 
+//        RxCache.init( context);//为RxCache提供Context
+
         setContentView(R.layout.activity_main);
         adapter = new BookAdapter(context, R.layout.activity_book, bookList);
         listView = (ListView) findViewById(R.id.list_book);

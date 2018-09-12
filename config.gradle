@@ -38,6 +38,8 @@ ext {
             rxAndroid            : 'io.reactivex:rxandroid:1.2.1',
             rxJava               : 'io.reactivex:rxjava:1.2.2',
 
+            //缓存框架
+            rxCache              : 'com.github.LtLei:RxCache:v1.0.0',
             // ------------- json解析 -------------
             fastJson             : 'com.alibaba:fastjson:1.1.54.android',
             gson                 : 'com.google.code.gson:gson:2.8.0',
