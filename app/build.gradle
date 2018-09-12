@@ -18,7 +18,7 @@ android {
     }
 
     packagingOptions {
-        exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/rxjava.properties'//跑出异常 防止 2 个 file
     }
 }
 
