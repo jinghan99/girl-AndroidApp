@@ -5,18 +5,21 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import com.example.jingh.myapplication.adapter.BookAdapter;
-import com.example.jingh.myapplication.appConstant.appConstant;
-import com.example.jingh.myapplication.entiy.UpdateBook;
+import com.example.jingh.myapplication.entiy.BookInfo;
+import com.example.jingh.myapplication.utils.BizConstant;
 import com.example.jingh.myapplication.utils.JSONUtils;
 import okhttp3.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
-    private List bookList = new ArrayList<>();
+    private static final String [] bookIds = {"592fe687c60e3c4926b040ca","53e56ee335f79bb626a496c9","5b0d28378659ea1aab8ca218","59e2c2b08bde16e66f9e3b85","5816b415b06d1d32157790b1"};
+
+    private List<BookInfo> bookList = new ArrayList<>();
 
     private ListView listView;
 
@@ -30,20 +33,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
-        //绑定初始化ButterKnife
-
-
-//        RxCache.init( context);//为RxCache提供Context
 
         setContentView(R.layout.activity_main);
         adapter = new BookAdapter(context, R.layout.activity_book, bookList);
         listView = (ListView) findViewById(R.id.list_book);
         listView.setAdapter(adapter);
-        initData();
+        initBook();
     }
 
+    public void initBook(){
+        for(String str: bookIds){
+            initBookInfo(str);
+        }
+    }
 
-    public void initData() {
+    public void initBookInfo(String id) {
         /**
          * 1. 创建一个OkHttp框架的核心的对象OkHttpClient
          */
@@ -52,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
          * 2. 创建一个请求对象Request
          */
         Request request = new Request.Builder().
-                url(appConstant.bookUpdateUrl)
+                url(BizConstant.bookInfo.getValue()+id)
                 .build();
         /**
          * 3. 生成一个新的请求任务
@@ -69,17 +73,18 @@ public class MainActivity extends AppCompatActivity {
                 // 获取服务器返回的状态码
                 if (response.code() == 200) {
                     String result = response.body().string();
-                    bookList.addAll(JSONUtils.GsonToList(result, UpdateBook.class));
-
-                    MainActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
+                    bookList.add(JSONUtils.GsonToBean(result, BookInfo.class));
                 } else {
 
                 }
+               if(bookList.size()>0){
+                   MainActivity.this.runOnUiThread(new Runnable() {
+                       @Override
+                       public void run() {
+                           adapter.notifyDataSetChanged();
+                       }
+                   });
+               }
             }
             // 当请求失败时call回调该方法（网络超时，IP地址写错）
             @Override
