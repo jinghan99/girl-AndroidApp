@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.widget.ListView;
 import com.example.jingh.myapplication.adapter.BookAdapter;
 import com.example.jingh.myapplication.entiy.BookInfo;
+import com.example.jingh.myapplication.fragment.Fragment1;
+import com.example.jingh.myapplication.fragment.Fragment2;
+import com.example.jingh.myapplication.fragment.Fragment3;
 import com.example.jingh.myapplication.utils.BizConstant;
+import com.example.jingh.myapplication.utils.BottomBar;
 import com.example.jingh.myapplication.utils.JSONUtils;
 import okhttp3.*;
 
@@ -32,9 +36,27 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         context = this;
 
-        setContentView(R.layout.activity_main);
-        listView = (ListView) findViewById(R.id.list_book);
-        new BookDataTask().execute(bookIds);
+//        setContentView(R.layout.activity_main_old);
+//        listView = (ListView) findViewById(R.id.list_book);
+//        new BookDataTask().execute(bookIds);
+
+
+        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottom_bar);
+        bottomBar.setContainer(R.id.fl_container)
+                .setTitleBeforeAndAfterColor("#999999", "#ff5d5e")
+                .addItem(Fragment1.class,
+                        "首页",
+                        R.mipmap.item1_before,
+                        R.mipmap.item1_after)
+                .addItem(Fragment2.class,
+                        "订单",
+                        R.mipmap.item2_before,
+                        R.mipmap.item2_after)
+                .addItem(Fragment3.class,
+                        "我的",
+                        R.mipmap.item3_before,
+                        R.mipmap.item3_after)
+                .build();
     }
 
 

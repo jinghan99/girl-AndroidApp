@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/activity_main"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              tools:context="com.example.jingh.myapplication.MainActivity"
               android:orientation="vertical">
 
+    <FrameLayout
+            android:id="@+id/fl_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
+    </FrameLayout>
 
-
-    <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/list_book"
-            tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="8dp">
-    </ListView>
-
-
+    <com.example.jingh.myapplication.utils.BottomBar
+            android:background="#FFFFFF"
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_gravity="bottom" />
 </LinearLayout>
