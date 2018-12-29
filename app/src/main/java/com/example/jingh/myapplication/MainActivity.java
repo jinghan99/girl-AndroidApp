@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         context = this;
 
-//        setContentView(R.layout.activity_main_old);
+       setContentView(R.layout.activity_main);
 //        listView = (ListView) findViewById(R.id.list_book);
 //        new BookDataTask().execute(bookIds);
 
