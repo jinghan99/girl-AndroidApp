@@ -17,7 +17,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 /**
- * @ClassName BookAdapter
+ * @ClassName BookAdapter 适配器
  * @Description
  * @Date 2018/7/18 14:40
  * @Author jinghan
@@ -45,23 +45,22 @@ public class BookAdapter extends ArrayAdapter {
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);//实例化一个对象
 
         TextView bookName = (TextView) view.findViewById(R.id.book_name);//获取该布局内的文本视图
-        bookName.setText(book.getTitle().toString());//为文本视图设置文本内容
         TextView bookType = (TextView) view.findViewById(R.id.book_type);//获取该布局内的文本视图
+        TextView bookUpdateChapter = (TextView) view.findViewById(R.id.book_update_chapter);//获取该布局内的文本视图
+        TextView update_time = (TextView) view.findViewById(R.id.update_time);//获取该布局内的文本视图
+
+
+        bookName.setText(book.getTitle().toString());//为文本视图设置文本内容
 
         bookType.setText(book.getAuthor().toString());
 
-        TextView bookUpdateChapter = (TextView) view.findViewById(R.id.book_update_chapter);//获取该布局内的文本视图
         bookUpdateChapter.setText(book.getLastChapter().toString());
-
-        TextView update_time = (TextView) view.findViewById(R.id.update_time);//获取该布局内的文本视图
 
         update_time.setText(FormatUtils.getDescriptionTimeFromDate(book.getUpdated()));
 
-//        加载图片
-        Picasso.with(context).load(imgUrlFirst+book.getCover())
-                .into((ImageView) view.findViewById(R.id.book_image));
+        //加载图片
+        Picasso.with(context).load(imgUrlFirst+book.getCover()) .into((ImageView)view.findViewById(R.id.book_image));
 
         return view;
     }
-
 }

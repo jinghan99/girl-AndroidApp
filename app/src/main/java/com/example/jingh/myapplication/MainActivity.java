@@ -1,8 +1,9 @@
 package com.example.jingh.myapplication;
 
+import android.app.Activity;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
 import com.example.jingh.myapplication.adapter.BookAdapter;
 import com.example.jingh.myapplication.entiy.BookInfo;
@@ -13,13 +14,10 @@ import okhttp3.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private static final String [] bookIds = {"592fe687c60e3c4926b040ca","53e56ee335f79bb626a496c9","5b0d28378659ea1aab8ca218","59e2c2b08bde16e66f9e3b85","5816b415b06d1d32157790b1"};
-
-    private List<BookInfo> bookList = new ArrayList<>();
 
     private ListView listView;
 
@@ -35,62 +33,50 @@ public class MainActivity extends AppCompatActivity {
         context = this;
 
         setContentView(R.layout.activity_main);
-        adapter = new BookAdapter(context, R.layout.activity_book, bookList);
         listView = (ListView) findViewById(R.id.list_book);
-        listView.setAdapter(adapter);
-        initBook();
+        new BookDataTask().execute(bookIds);
     }
 
-    public void initBook(){
-        for(String str: bookIds){
-            initBookInfo(str);
+
+
+    /*
+     * 定义内部类： <Params, Progress, Result>，实现网络异步访问
+     */
+    class BookDataTask extends AsyncTask<String, Void, List<BookInfo>> {
+        /**
+         * 异步处理 获取书信息
+         * @param   ids
+         * @return
+         */
+        @Override
+        protected List<BookInfo> doInBackground(String... ids) {
+            List<BookInfo> bookList = new ArrayList<>();
+            for (String id : ids) {
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request request = new Request.Builder().url(BizConstant.bookInfo.getValue() + id).build();
+                Call call = okHttpClient.newCall(request);
+                try {
+                    String result = call.execute().body().string();
+                    bookList.add(JSONUtils.GsonToBean(result, BookInfo.class));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return bookList;
+        }
+
+        /**
+         * 执行完后台任务后更新UI
+         * onPostExecute用于UI的更新.此方法的参数为doInBackground方法返回的值.
+         * @param bookList
+         */
+        @Override
+        protected void onPostExecute(List<BookInfo> bookList) {
+            super.onPostExecute(bookList);
+            adapter = new BookAdapter(context, R.layout.activity_book, bookList);
+            listView.setAdapter(adapter);
         }
     }
 
-    public void initBookInfo(String id) {
-        /**
-         * 1. 创建一个OkHttp框架的核心的对象OkHttpClient
-         */
-        OkHttpClient okHttpClient = new OkHttpClient();
-        /**
-         * 2. 创建一个请求对象Request
-         */
-        Request request = new Request.Builder().
-                url(BizConstant.bookInfo.getValue()+id)
-                .build();
-        /**
-         * 3. 生成一个新的请求任务
-         */
-        Call call = okHttpClient.newCall(request);
-        /**
-         * 4. 执行任务 把call添加到任务栈，一添加进入就会被立即执行 异步的请求
-         */
-        call.enqueue(new Callback() {
-            // 当服务器返回数据的时候，call对象要回调该方法
-            // response 就代表了服务器给我们返回的所有的数据
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                // 获取服务器返回的状态码
-                if (response.code() == 200) {
-                    String result = response.body().string();
-                    bookList.add(JSONUtils.GsonToBean(result, BookInfo.class));
-                } else {
-
-                }
-               if(bookList.size()>0){
-                   MainActivity.this.runOnUiThread(new Runnable() {
-                       @Override
-                       public void run() {
-                           adapter.notifyDataSetChanged();
-                       }
-                   });
-               }
-            }
-            // 当请求失败时call回调该方法（网络超时，IP地址写错）
-            @Override
-            public void onFailure(Call call, IOException exception) {
-
-            }
-        });
-    }
 }
