@@ -21,7 +21,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * 我的书架 页面载入
+ */
 public class MyBooks extends Fragment {
 
     private static final String [] bookIds = {"5a72f91a3f334879bf2a8275","5ab8999eba32357ab6ebab98","592fe687c60e3c4926b040ca","53e56ee335f79bb626a496c9","5b0d28378659ea1aab8ca218","59e2c2b08bde16e66f9e3b85","5816b415b06d1d32157790b1"};
