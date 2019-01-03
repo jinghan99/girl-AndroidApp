@@ -6,14 +6,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.jingh.myapplication.R;
 
 
-public class Fragment1 extends Fragment {
+public class BookRank extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return LayoutInflater.from(getActivity()).inflate(R.layout.fragment1, container, false);
+        return LayoutInflater.from(getActivity()).inflate(R.layout.fragment2, container, false);
     }
 }
