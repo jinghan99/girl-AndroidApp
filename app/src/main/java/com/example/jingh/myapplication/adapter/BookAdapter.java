@@ -9,9 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.jingh.myapplication.R;
 import com.example.jingh.myapplication.entiy.BookInfo;
-import com.example.jingh.myapplication.entiy.UpdateBook;
 import com.example.jingh.myapplication.utils.FormatUtils;
-import com.google.gson.internal.LinkedTreeMap;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -54,12 +52,16 @@ public class BookAdapter extends ArrayAdapter {
 
         bookType.setText(book.getAuthor().toString());
 
-        bookUpdateChapter.setText(book.getLastChapter().toString());
+//        文字超长 截断 ..
+        if(book.getLastChapter() !=null && book.getLastChapter().length() > 16){
+            book.setLastChapter(book.getLastChapter().substring(0,16) + "..");
+        }
+        bookUpdateChapter.setText(book.getLastChapter());
 
         update_time.setText(FormatUtils.getDescriptionTimeFromDate(book.getUpdated()));
 
         //加载图片
-        Picasso.with(context).load(imgUrlFirst+book.getCover()) .into((ImageView)view.findViewById(R.id.book_image));
+        Picasso.with(context).load(imgUrlFirst+book.getCover()).into((ImageView)view.findViewById(R.id.book_image));
 
         return view;
     }

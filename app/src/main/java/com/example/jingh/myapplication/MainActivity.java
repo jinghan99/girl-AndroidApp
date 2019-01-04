@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
                         R.mipmap.item2_before,
                         R.mipmap.item2_after)
                         .addItem(MyInfo.class,
-                        "我的",
+                        "我",
                         R.mipmap.item3_before,
                         R.mipmap.item3_after)
                 .build();
