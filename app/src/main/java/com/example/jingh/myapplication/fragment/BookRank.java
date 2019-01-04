@@ -31,6 +31,7 @@ public class BookRank extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent();
+                intent.putExtra("sexType","man");
                 intent.setClass(getActivity(),RankNameActivity.class);
                 startActivity(intent);
             }
