@@ -3,9 +3,9 @@ package com.example.jingh.myapplication;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import com.example.jingh.myapplication.fragment.BookRank;
-import com.example.jingh.myapplication.fragment.MyBooks;
-import com.example.jingh.myapplication.fragment.MyInfo;
+import com.example.jingh.myapplication.fragment.RankBottomBar;
+import com.example.jingh.myapplication.fragment.MyBookBottomBar;
+import com.example.jingh.myapplication.fragment.MyInfoBottomBar;
 import com.example.jingh.myapplication.utils.BottomBar;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,17 +19,17 @@ public class MainActivity extends AppCompatActivity {
         context = this;
         setContentView(R.layout.activity_main);
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottom_bar);
-        bottomBar.setContainer(R.id.fl_container)
+        bottomBar.setContainer(R.id.bottom_bar_container)
                 .setTitleBeforeAndAfterColor("#999999", "#ff5d5e")
-                .addItem(MyBooks.class,
+                .addItem(MyBookBottomBar.class,
                         "我的书架",
                         R.mipmap.item1_before,
                         R.mipmap.item1_after)
-                        .addItem(BookRank.class,
+                        .addItem(RankBottomBar.class,
                         "排行版",
                         R.mipmap.item2_before,
                         R.mipmap.item2_after)
-                        .addItem(MyInfo.class,
+                        .addItem(MyInfoBottomBar.class,
                         "我",
                         R.mipmap.item3_before,
                         R.mipmap.item3_after)

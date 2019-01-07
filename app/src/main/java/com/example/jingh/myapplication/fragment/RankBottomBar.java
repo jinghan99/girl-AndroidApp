@@ -14,9 +14,9 @@ import static com.example.jingh.myapplication.R.id;
 import static com.example.jingh.myapplication.R.layout;
 
 /**
- * 榜单 页面
+ * 排行榜 底部导航栏
  */
-public class BookRank extends Fragment {
+public class RankBottomBar extends Fragment {
 
 
     @Nullable
@@ -24,7 +24,7 @@ public class BookRank extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(layout.book_rank, container, false);
+        View view = inflater.inflate(layout.rank_bottom, container, false);
         ImageView manImage = (ImageView) view.findViewById(id.book_man);
         //监听
         manImage.setOnClickListener(new View.OnClickListener() {

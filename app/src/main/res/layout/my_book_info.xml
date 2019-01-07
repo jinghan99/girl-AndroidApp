@@ -7,6 +7,8 @@
         android:layout_height="match_parent"
         android:background="#fffff9"
 >
+
+    <!--我的书架 书籍信息 显示-->
     <ImageView
             android:id="@+id/book_image"
             android:layout_width="63dp"

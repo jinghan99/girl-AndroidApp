@@ -9,10 +9,13 @@ import android.view.ViewGroup;
 import com.example.jingh.myapplication.R;
 
 
-public class MyInfo extends Fragment {
+/**
+ * 我 底部导航栏
+ */
+public class MyInfoBottomBar extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return LayoutInflater.from(getActivity()).inflate(R.layout.my_info, container, false);
+        return LayoutInflater.from(getActivity()).inflate(R.layout.my_bottom, container, false);
     }
 }

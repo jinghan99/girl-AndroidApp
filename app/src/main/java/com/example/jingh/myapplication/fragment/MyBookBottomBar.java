@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 我的书架 页面载入
+ * 我的书架 底部导航栏
  */
-public class MyBooks extends Fragment {
+public class MyBookBottomBar extends Fragment {
 
     private static final String [] bookIds = {"5a72f91a3f334879bf2a8275","5ab8999eba32357ab6ebab98","592fe687c60e3c4926b040ca","53e56ee335f79bb626a496c9","5b0d28378659ea1aab8ca218","59e2c2b08bde16e66f9e3b85","5816b415b06d1d32157790b1"};
 
@@ -34,8 +34,8 @@ public class MyBooks extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.my_books, container, false);
-        listView = (ListView)view.findViewById(R.id.list_book);
+        View view= inflater.inflate(R.layout.my_books_bottom, container, false);
+        listView = (ListView)view.findViewById(R.id.my_book_list);
         new BookDataTask().execute(bookIds);
         return view;
     }
@@ -76,7 +76,7 @@ public class MyBooks extends Fragment {
         @Override
         protected void onPostExecute(List<BookInfo> bookList) {
             super.onPostExecute(bookList);
-            listView.setAdapter(new BookAdapter(getActivity(), R.layout.activity_book, bookList));
+            listView.setAdapter(new BookAdapter(getActivity(), R.layout.my_book_info, bookList));
         }
     }
 }
