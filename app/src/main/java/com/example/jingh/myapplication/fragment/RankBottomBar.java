@@ -93,18 +93,17 @@ public class RankBottomBar extends Fragment {
         }
 
         //     "我的的", "看过我", "新职位", "第四个", "第五个", "嘿嘿", "没有啦"
-        private final String[] titles = {"我的的啊啊啊", "看过我", "新职位", "第四个", "第五个的哦", "嘿嘿", "没有啦"};
-//        private final String[] titles = {"我的的啊啊啊", "看过我","看过我的"};
+        private final String[] man_titles = {"最热榜", "好评榜", "热搜榜", "潜力榜", "完结榜", "纵横榜", "和阅读榜", "逐浪榜"};
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return titles[position];
+            return man_titles[position];
         }
 
 
         @Override
         public int getCount() {
-            return titles.length;
+            return man_titles.length;
         }
 
         @Override
