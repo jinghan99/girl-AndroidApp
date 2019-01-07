@@ -43,7 +43,11 @@ dependencies {
     implementation rootProject.ext.dependencies["rxJava"]
     implementation rootProject.ext.dependencies["gson"]
     implementation rootProject.ext.dependencies["logger"]
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    //稳定版（推荐）没特殊需求建议使用官方TabLayout控件
+    implementation 'com.longsh:PagerSlidingTabStrip:1.0.0'
+
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation 'com.android.support:appcompat-v7:25.3.1'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
