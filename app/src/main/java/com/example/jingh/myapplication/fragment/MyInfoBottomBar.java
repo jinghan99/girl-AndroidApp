@@ -16,6 +16,6 @@ public class MyInfoBottomBar extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return LayoutInflater.from(getActivity()).inflate(R.layout.my_bottom, container, false);
+        return LayoutInflater.from(getActivity()).inflate(R.layout.bottom_my, container, false);
     }
 }

@@ -36,7 +36,7 @@ public class RankBottomBar extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(layout.rank_bottom, container, false);
+        View view = inflater.inflate(layout.bottom_rank, container, false);
         ViewPager pager = (ViewPager) view.findViewById(R.id.pager);
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         pager.setAdapter(new MyPagerAdapter(getFragmentManager()));

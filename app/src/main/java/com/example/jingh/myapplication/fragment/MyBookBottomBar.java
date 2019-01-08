@@ -34,7 +34,7 @@ public class MyBookBottomBar extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view= inflater.inflate(R.layout.my_books_bottom, container, false);
+        View view= inflater.inflate(R.layout.bottom_my_book_list, container, false);
         listView = (ListView)view.findViewById(R.id.my_book_list);
         new BookDataTask().execute(bookIds);
         return view;
@@ -76,7 +76,7 @@ public class MyBookBottomBar extends Fragment {
         @Override
         protected void onPostExecute(List<BookInfo> bookList) {
             super.onPostExecute(bookList);
-            listView.setAdapter(new BookAdapter(getActivity(), R.layout.my_book_info, bookList));
+            listView.setAdapter(new BookAdapter(getActivity(), R.layout.bottom_my_book_info, bookList));
         }
     }
 }
