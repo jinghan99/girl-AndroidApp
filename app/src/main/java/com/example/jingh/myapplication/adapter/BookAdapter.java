@@ -43,14 +43,14 @@ public class BookAdapter extends ArrayAdapter {
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);//实例化一个对象
 
         TextView bookName = (TextView) view.findViewById(R.id.book_name);//获取该布局内的文本视图
-        TextView bookType = (TextView) view.findViewById(R.id.book_type);//获取该布局内的文本视图
+        TextView bookAuthor = (TextView) view.findViewById(R.id.book_author);//获取该布局内的文本视图
         TextView bookUpdateChapter = (TextView) view.findViewById(R.id.book_update_chapter);//获取该布局内的文本视图
         TextView update_time = (TextView) view.findViewById(R.id.update_time);//获取该布局内的文本视图
 
 
         bookName.setText(book.getTitle().toString());//为文本视图设置文本内容
 
-        bookType.setText(book.getAuthor().toString());
+        bookAuthor.setText(book.getAuthor()+" 著");
 
 //        文字超长 截断 ..
         if(book.getLastChapter() !=null && book.getLastChapter().length() > 16){

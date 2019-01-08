@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.jingh.myapplication.R;
+import com.example.jingh.myapplication.appConstant.appConstant;
 import com.example.jingh.myapplication.fragment.tab.*;
 import com.longsh.longshlibrary.PagerSlidingTabStrip;
 
@@ -22,14 +23,14 @@ import static com.example.jingh.myapplication.R.layout;
  */
 public class RankBottomBar extends Fragment {
 
-    private PagerSlidingTabStrip tabs;
-    private OneFragment          oneFragment;
-    private TwoFragment          twoFragment;
-    private ThreeFragment        threeFragment;
-    private FourFragment         fourFragment;
-    private FiveFragment         fiveFragment;
-    private HeiheiFragment       heiheiFragment;
-    private NoMoreFragment       noMoreFragment;
+    private PagerSlidingTabStrip  tabs;
+    private HotRankFragment       hotRankFragment;
+    private GoodRankFragment      goodRankFragment;
+    private SearchRankFragment    searchRankFragment;
+    private PotentialRankFragment potentialRankFragment;
+    private EndRankFragment       endRankFragment;
+    private ZHRankFragment        ZHRankFragment;
+    private AndReadRankFragment   andReadRankFragment;
 
 
     @Nullable
@@ -43,11 +44,11 @@ public class RankBottomBar extends Fragment {
 //        pager.setOffscreenPageLimit(6);
         setTabsValue();
         //设置小红点,item从0开始计算
-//        tabs.setMsgToast(1, true);
-        tabs.setMsgToast(0, true);
-        tabs.setMsgToast(3, true);
-        tabs.setMsgToast(4, true);
-        tabs.setMsgToast(6, true);
+//        tabs.setMsgToast(0, true);
+//        tabs.setMsgToast(3, true);
+//        tabs.setMsgToast(4, true);
+//        tabs.setMsgToast(6, true);
+        Bundle bundle = new Bundle();
 
 
 
@@ -92,59 +93,80 @@ public class RankBottomBar extends Fragment {
             super(fm);
         }
 
-        //     "我的的", "看过我", "新职位", "第四个", "第五个", "嘿嘿", "没有啦"
-        private final String[] man_titles = {"最热榜", "好评榜", "热搜榜", "潜力榜", "完结榜", "纵横榜", "和阅读榜"};
+        //
+
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return man_titles[position];
+            return appConstant.MAN_TITLES[position];
         }
 
 
         @Override
         public int getCount() {
-            return man_titles.length;
+            return appConstant.MAN_TITLES.length;
         }
 
         @Override
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    if (oneFragment == null) {
-                        oneFragment = new OneFragment();
+                    if (hotRankFragment == null) {
+                        hotRankFragment = new HotRankFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position",position);//这里的values就是我们要传的值
+                        hotRankFragment.setArguments(bundle);
                     }
-                    return oneFragment;
+                    return hotRankFragment;
                 case 1:
-                    if (twoFragment == null) {
-                        twoFragment = new TwoFragment();
+                    if (goodRankFragment == null) {
+                        goodRankFragment = new GoodRankFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position",position);//这里的values就是我们要传的值
+                        goodRankFragment.setArguments(bundle);
                     }
-                    return twoFragment;
+                    return goodRankFragment;
 
                 case 2:
-                    if (threeFragment == null) {
-                        threeFragment = new ThreeFragment();
+                    if (searchRankFragment == null) {
+                        searchRankFragment = new SearchRankFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position",position);//这里的values就是我们要传的值
+                        searchRankFragment.setArguments(bundle);
                     }
-                    return threeFragment;
+                    return searchRankFragment;
                 case 3:
-                    if (fourFragment == null) {
-                        fourFragment = new FourFragment();
+                    if (potentialRankFragment == null) {
+                        potentialRankFragment = new PotentialRankFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position",position);//这里的values就是我们要传的值
+                        potentialRankFragment.setArguments(bundle);
                     }
-                    return fourFragment;
+                    return potentialRankFragment;
                 case 4:
-                    if (fiveFragment == null) {
-                        fiveFragment = new FiveFragment();
+                    if (endRankFragment == null) {
+                        endRankFragment = new EndRankFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position",position);//这里的values就是我们要传的值
+                        endRankFragment.setArguments(bundle);
                     }
-                    return fiveFragment;
+                    return endRankFragment;
                 case 5:
-                    if (heiheiFragment == null) {
-                        heiheiFragment = new HeiheiFragment();
+                    if (ZHRankFragment == null) {
+                        ZHRankFragment = new ZHRankFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position",position);//这里的values就是我们要传的值
+                        ZHRankFragment.setArguments(bundle);
                     }
-                    return heiheiFragment;
+                    return ZHRankFragment;
                 case 6:
-                    if (noMoreFragment == null) {
-                        noMoreFragment = new NoMoreFragment();
+                    if (andReadRankFragment == null) {
+                        andReadRankFragment = new AndReadRankFragment();
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position",position);//这里的values就是我们要传的值
+                        andReadRankFragment.setArguments(bundle);
                     }
-                    return noMoreFragment;
+                    return andReadRankFragment;
                 default:
 
                     return null;

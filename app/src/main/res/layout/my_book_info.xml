@@ -26,15 +26,15 @@
             android:layout_height="38dp"
             android:text="圣墟"
             android:textColor="#3b3838"
-            android:textSize="20dp"
+            android:textSize="15dp"
             android:layout_marginStart="8dp" app:layout_constraintLeft_toRightOf="@+id/book_image"
             android:layout_marginLeft="8dp" app:layout_constraintTop_toTopOf="parent" android:layout_marginTop="8dp"/>
 
     <TextView
-            android:id="@+id/book_type"
+            android:id="@+id/book_author"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="仙侠"
+            android:text="耳根"
             android:textSize="16dp"
             app:layout_constraintLeft_toRightOf="@+id/book_image" android:layout_marginLeft="9dp"
              app:layout_constraintTop_toBottomOf="@+id/book_name"

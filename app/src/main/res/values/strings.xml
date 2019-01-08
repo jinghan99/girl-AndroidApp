@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">至凡小说</string>
+    <string name="book_name">15dp</string>
+    <string name="book_author">11dp</string>
 </resources>

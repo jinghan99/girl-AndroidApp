@@ -2,15 +2,13 @@ package com.example.jingh.myapplication.utils;
 
 import com.example.jingh.myapplication.appConstant.appConstant;
 import com.example.jingh.myapplication.entiy.UpdateBook;
-import com.google.gson.*;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -100,6 +98,7 @@ public class JSONUtils {
         }
         return list;
     }
+
 
 
     /**

@@ -4,7 +4,7 @@ import java.util.Date;
 
 /**
  * @Package com.example.jingh.myapplication.entiy
- * @Description: TODO
+ * @Description: 书籍信息
  * @author: jingh
  * @date 2018/9/13 16:21
  */
@@ -45,15 +45,59 @@ public class BookInfo {
 // "limit":false}
 
 
+
+//    {
+//        "_id": "5642be60f1b24c7a7468c5d7",
+//            "title": "逆鳞",
+//            "author": "柳下挥",
+//            "shortIntro": "天生废材，遭遇龙神附体。继承了神龙的意念和能力，生鳞幻爪、御水龙息、行云降雨，肉身无敌。\r\n在这个人人都想屠龙的时代，李牧羊一直生活的很有压力。",
+//            "cover": "/agent/http%3A%2F%2Fimg.1391.com%2Fapi%2Fv1%2Fbookcenter%2Fcover%2F1%2F883124%2F883124_b0e96427594e4e97bc2a7235e2b36114.jpg%2F",
+//            "site": "zhuishuvip",
+//            "majorCate": "都市",
+//            "minorCate": "都市生活",
+//            "allowMonthly": true,
+//            "banned": 0,
+//            "latelyFollower": 6460,
+//            "retentionRatio": "37.88"
+//    },
+
     private String _id;
+    /**
+     * 书名
+     */
     private String title;
+    /**
+     * 作者
+     */
     private String author;
+    /**
+     * 简介
+     */
+    private String shortIntro;
+
     private String longIntro;
+    /**
+     * 书 封面
+     */
     private String cover;
+    /**
+     * 分类
+     */
     private String majorCate;
+    /**
+     * 最近一章
+     */
     private String lastChapter;
     private Date   updated;
+    /**
+     * 总章数
+     */
     private String chaptersCount;
+    private String allowMonthly;
+    /**
+     * 追书人数
+     */
+    private String latelyFollower;
 
     public String get_id() {
         return _id;
@@ -127,18 +171,27 @@ public class BookInfo {
         this.chaptersCount = chaptersCount;
     }
 
-    @Override
-    public String toString() {
-        return "BookInfo{" +
-                "_id='" + _id + '\'' +
-                ", title='" + title + '\'' +
-                ", author='" + author + '\'' +
-                ", longIntro='" + longIntro + '\'' +
-                ", cover='" + cover + '\'' +
-                ", majorCate='" + majorCate + '\'' +
-                ", lastChapter='" + lastChapter + '\'' +
-                ", updated='" + updated + '\'' +
-                ", chaptersCount='" + chaptersCount + '\'' +
-                '}';
+    public String getShortIntro() {
+        return shortIntro;
+    }
+
+    public void setShortIntro(String shortIntro) {
+        this.shortIntro = shortIntro;
+    }
+
+    public String getAllowMonthly() {
+        return allowMonthly;
+    }
+
+    public void setAllowMonthly(String allowMonthly) {
+        this.allowMonthly = allowMonthly;
+    }
+
+    public String getLatelyFollower() {
+        return latelyFollower;
+    }
+
+    public void setLatelyFollower(String latelyFollower) {
+        this.latelyFollower = latelyFollower;
     }
 }
