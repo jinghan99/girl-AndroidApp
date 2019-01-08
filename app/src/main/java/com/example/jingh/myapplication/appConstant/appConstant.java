@@ -9,6 +9,8 @@ package com.example.jingh.myapplication.appConstant;
  */
 public class appConstant {
 
+    public static final String CACHE_BOOK_ID="cache_Book_Id";
+
     public static final String imgUrlFirst = "http://statics.zhuishushenqi.com";
 
     //小说连载 更新 信息

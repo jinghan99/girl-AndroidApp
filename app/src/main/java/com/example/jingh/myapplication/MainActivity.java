@@ -3,20 +3,22 @@ package com.example.jingh.myapplication;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import com.example.jingh.myapplication.fragment.RankBottomBar;
+import com.example.jingh.myapplication.disk.DiskLruCacheHelper;
 import com.example.jingh.myapplication.fragment.MyBookBottomBar;
 import com.example.jingh.myapplication.fragment.MyInfoBottomBar;
+import com.example.jingh.myapplication.fragment.RankBottomBar;
 import com.example.jingh.myapplication.utils.BottomBar;
 
 public class MainActivity extends AppCompatActivity {
 
     private Context context;
 
-
+    private DiskLruCacheHelper diskLruCacheHelper ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
+
         setContentView(R.layout.activity_main);
         BottomBar bottomBar = (BottomBar) findViewById(R.id.bottom_bar);
         bottomBar.setContainer(R.id.bottom_bar_container)

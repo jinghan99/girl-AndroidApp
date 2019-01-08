@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import com.example.jingh.myapplication.R;
 import com.example.jingh.myapplication.adapter.BookAdapter;
+import com.example.jingh.myapplication.appConstant.appConstant;
+import com.example.jingh.myapplication.disk.DiskLruCacheHelper;
 import com.example.jingh.myapplication.entiy.BookInfo;
 import com.example.jingh.myapplication.utils.BizConstant;
 import com.example.jingh.myapplication.utils.JSONUtils;
@@ -26,16 +28,26 @@ import java.util.List;
  */
 public class MyBookBottomBar extends Fragment {
 
-    private static final String [] bookIds = {"5a72f91a3f334879bf2a8275","5ab8999eba32357ab6ebab98","592fe687c60e3c4926b040ca","53e56ee335f79bb626a496c9","5b0d28378659ea1aab8ca218","59e2c2b08bde16e66f9e3b85","5816b415b06d1d32157790b1"};
+    private static  String [] bookIds = {"5a72f91a3f334879bf2a8275","5ab8999eba32357ab6ebab98","592fe687c60e3c4926b040ca","53e56ee335f79bb626a496c9","5b0d28378659ea1aab8ca218","59e2c2b08bde16e66f9e3b85","5816b415b06d1d32157790b1"};
 
     private ListView listView;
 
+    private DiskLruCacheHelper diskLruCacheHelper ;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.bottom_my_book_list, container, false);
         listView = (ListView)view.findViewById(R.id.my_book_list);
+        try {
+            diskLruCacheHelper = new DiskLruCacheHelper(getActivity());
+            String ids = diskLruCacheHelper.getAsString(appConstant.CACHE_BOOK_ID);
+            if(ids !=null){
+                bookIds = ids.split(",");
+            }
+        } catch (IOException e) {
+
+        }
         new BookDataTask().execute(bookIds);
         return view;
     }

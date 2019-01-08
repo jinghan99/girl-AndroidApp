@@ -1,5 +1,6 @@
 package com.example.jingh.myapplication.fragment.tab;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,7 +8,9 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import com.example.jingh.myapplication.BookInfoActivity;
 import com.example.jingh.myapplication.R;
 import com.example.jingh.myapplication.adapter.RankBookAdapter;
 import com.example.jingh.myapplication.entiy.BookInfo;
@@ -15,6 +18,7 @@ import com.example.jingh.myapplication.utils.BizConstant;
 import com.example.jingh.myapplication.utils.BookUtils;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -72,9 +76,21 @@ public class GoodRankFragment extends Fragment {
          * @param bookList
          */
         @Override
-        protected void onPostExecute(List<BookInfo> bookList) {
+        protected void onPostExecute(final List<BookInfo> bookList) {
             super.onPostExecute(bookList);
             listView.setAdapter(new RankBookAdapter(getActivity(), R.layout.rank_book_info, bookList));
+            /**
+             * 点击事件
+             */
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    BookInfo bookInfo = bookList.get(position);
+                    Intent intent=new Intent(getContext(),BookInfoActivity.class);
+                    intent.putExtra("bookInfo", (Serializable) bookInfo);
+                    startActivity(intent);
+                }
+            });
         }
     }
 }

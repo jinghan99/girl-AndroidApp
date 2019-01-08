@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white_bg">#ffffff</color>
     <color name="book_bg">#ffffff</color>
+    <color name="bottom">#a1e2b9</color>
 </resources>
