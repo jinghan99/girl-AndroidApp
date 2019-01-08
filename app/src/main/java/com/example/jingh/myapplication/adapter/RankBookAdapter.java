@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.jingh.myapplication.R;
+import com.example.jingh.myapplication.appConstant.appConstant;
 import com.example.jingh.myapplication.entiy.BookInfo;
 import com.squareup.picasso.Picasso;
 
@@ -22,7 +23,7 @@ import java.util.List;
  */
 public class RankBookAdapter extends ArrayAdapter {
 
-    private static final String imgUrlFirst = "http://statics.zhuishushenqi.com";
+
 
     private final int resourceId;
 
@@ -58,7 +59,7 @@ public class RankBookAdapter extends ArrayAdapter {
         );
 
         //加载图片
-        Picasso.with(context).load(imgUrlFirst + book.getCover()).into((ImageView) view.findViewById(R.id.rank_book_image));
+        Picasso.with(context).load(appConstant.imgUrlFirst + book.getCover()).into((ImageView) view.findViewById(R.id.rank_book_image));
         return view;
     }
 }

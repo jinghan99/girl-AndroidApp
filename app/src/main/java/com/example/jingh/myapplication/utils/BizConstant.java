@@ -9,6 +9,7 @@ package com.example.jingh.myapplication.utils;
  */
 public enum BizConstant {
 
+
     //字典
     imgUrl("http://statics.zhuishushenqi.com/","小说图片前缀"),
     bookInfo("http://api.zhuishushenqi.com/book/","小说信息"),//后加小说id ： http://api.zhuishushenqi.com/book/57ceb2069acafda7326052ae

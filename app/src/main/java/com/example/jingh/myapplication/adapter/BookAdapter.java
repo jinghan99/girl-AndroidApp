@@ -8,6 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.jingh.myapplication.R;
+import com.example.jingh.myapplication.appConstant.appConstant;
 import com.example.jingh.myapplication.entiy.BookInfo;
 import com.example.jingh.myapplication.utils.FormatUtils;
 import com.squareup.picasso.Picasso;
@@ -23,7 +24,6 @@ import java.util.List;
  */
 public class BookAdapter extends ArrayAdapter {
 
-    private static final String imgUrlFirst="http://statics.zhuishushenqi.com";
 
     private final int resourceId;
 
@@ -42,10 +42,10 @@ public class BookAdapter extends ArrayAdapter {
 
         View view = LayoutInflater.from(getContext()).inflate(resourceId, null);//实例化一个对象
 
-        TextView bookName = (TextView) view.findViewById(R.id.book_name);//获取该布局内的文本视图
-        TextView bookAuthor = (TextView) view.findViewById(R.id.book_author);//获取该布局内的文本视图
-        TextView bookUpdateChapter = (TextView) view.findViewById(R.id.book_update_chapter);//获取该布局内的文本视图
-        TextView update_time = (TextView) view.findViewById(R.id.update_time);//获取该布局内的文本视图
+        TextView bookName = (TextView) view.findViewById(R.id.my_book_name);//获取该布局内的文本视图
+        TextView bookAuthor = (TextView) view.findViewById(R.id.my_book_author);//获取该布局内的文本视图
+        TextView bookUpdateChapter = (TextView) view.findViewById(R.id.my_book_update_chapter);//获取该布局内的文本视图
+        TextView update_time = (TextView) view.findViewById(R.id.my_update_time);//获取该布局内的文本视图
 
 
         bookName.setText(book.getTitle().toString());//为文本视图设置文本内容
@@ -61,7 +61,7 @@ public class BookAdapter extends ArrayAdapter {
         update_time.setText(FormatUtils.getDescriptionTimeFromDate(book.getUpdated()));
 
         //加载图片
-        Picasso.with(context).load(imgUrlFirst+book.getCover()).into((ImageView)view.findViewById(R.id.book_image));
+        Picasso.with(context).load(appConstant.imgUrlFirst+book.getCover()).into((ImageView)view.findViewById(R.id.my_book_image));
 
         return view;
     }

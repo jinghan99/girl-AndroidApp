@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:baselineAligned="false"
+              android:orientation="vertical">
+    <!-- android:orientation="vertical" 垂直排列-->
+    <!-- android:orientation="horizontal" 水平排列-->
+
+    <android.support.constraint.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:background="@color/white_bg"
+            android:layout_height="180dp">
+
+        <ImageView
+                android:id="@+id/book_image"
+                android:layout_width="100dp"
+                android:layout_height="130dp"
+                android:background="@color/white_bg"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+
+        />
+        <TextView android:id="@+id/book_name"
+                  android:layout_width="wrap_content"
+                  android:layout_height="29dp"
+                  android:background="@color/white_bg"
+                  android:text="剑来"
+                  android:textSize="22dp"
+                  app:layout_constraintTop_toTopOf="@+id/book_image"
+                  app:layout_constraintLeft_toRightOf="@+id/book_image"
+                  android:layout_marginLeft="20dp"/>
+
+        <TextView android:id="@+id/book_majorCate"
+                  android:layout_width="wrap_content"
+                  android:layout_height="23dp"
+                  android:background="@color/white_bg"
+                  android:text="古典仙侠"
+                  android:textSize="12dp"
+                  android:layout_marginTop="12dp"
+                  app:layout_constraintTop_toBottomOf="@+id/book_name"
+                  app:layout_constraintLeft_toLeftOf="@+id/book_name"
+        />
+
+        <TextView android:id="@+id/book_author"
+                  android:layout_width="wrap_content"
+                  android:layout_height="23dp"
+                  android:background="@color/white_bg"
+                  android:text="诸葛戏诸侯"
+                  android:textSize="12dp"
+                  android:textColor="#53b71943"
+                  android:layout_marginTop="10dp"
+                  app:layout_constraintTop_toBottomOf="@+id/book_majorCate"
+                  app:layout_constraintLeft_toLeftOf="@+id/book_majorCate"/>
+
+        <TextView android:id="@+id/update_time"
+                  android:layout_width="wrap_content"
+                  android:layout_height="23dp"
+                  android:background="@color/white_bg"
+                  android:text="16小时前更新"
+                  android:textSize="12dp"
+                  android:layout_marginTop="8dp"
+                  app:layout_constraintTop_toBottomOf="@+id/book_author"
+                  app:layout_constraintBottom_toBottomOf="@+id/book_image"
+                  android:layout_marginBottom="8dp"
+                  android:layout_marginLeft="0dp"
+                  app:layout_constraintLeft_toLeftOf="@+id/book_author"/>
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:background="#cbdedf"
+            android:layout_height="130dp">
+
+
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.constraint.ConstraintLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:background="#c4cce2"
+            android:layout_height="match_parent">
+
+
+    </android.support.constraint.ConstraintLayout>
+</LinearLayout>
+

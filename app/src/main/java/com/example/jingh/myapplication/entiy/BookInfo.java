@@ -1,5 +1,6 @@
 package com.example.jingh.myapplication.entiy;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Date;
  * @author: jingh
  * @date 2018/9/13 16:21
  */
-public class BookInfo {
+public class BookInfo implements Serializable{
 
 //    {"_id":"57ceb2069acafda7326052ae",
 // "title":"最强反套路系统",

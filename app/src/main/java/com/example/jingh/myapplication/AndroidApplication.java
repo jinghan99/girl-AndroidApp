@@ -1,10 +1,10 @@
 package com.example.jingh.myapplication;
 
-import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
 import android.widget.Toast;
+import com.example.jingh.myapplication.helper.ActivityLifeHelper;
 
 /**
  * @Package com.example.jingh.myapplication
@@ -41,7 +41,7 @@ public class AndroidApplication extends Application {
          * 初始化
          */
         initScreenSize();
-
+        registerActivityLifecycleCallbacks(ActivityLifeHelper.instance());
     }
 
     /**
