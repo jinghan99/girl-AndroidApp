@@ -14,7 +14,7 @@ import com.example.jingh.myapplication.helper.ActivityLifeHelper;
  */
 public class AndroidApplication extends Application {
     private static AndroidApplication mInstance;
-    private        Context            mContext;
+    private static Context            context;
     AppPreference appPreference;
 
     /**
@@ -35,13 +35,16 @@ public class AndroidApplication extends Application {
         super.onCreate();
         //activityManager = ActivityManager.getInstance(); // 获得实例
         mInstance = this;
-        mContext = getApplicationContext();
+        context = getApplicationContext();
         appPreference = AppPreference.init(this);
         /**
          * 初始化
          */
         initScreenSize();
         registerActivityLifecycleCallbacks(ActivityLifeHelper.instance());
+    }
+    public static Context getContext() {
+        return context;
     }
 
     /**
@@ -68,7 +71,6 @@ public class AndroidApplication extends Application {
     public static AndroidApplication getInstance() {
         return mInstance;
     }
-
 
 
 }

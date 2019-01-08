@@ -32,7 +32,6 @@ public class BookInfoActivity extends Activity {
 
     private Button             addRead;
 
-    private DiskLruCacheHelper diskLruCacheHelper ;
 
     private Context context;
 
@@ -43,11 +42,7 @@ public class BookInfoActivity extends Activity {
         context = this;
         bookInfo= (BookInfo) getIntent().getSerializableExtra("bookInfo");
         setContentView(R.layout.book_info);
-        try {
-            diskLruCacheHelper = new DiskLruCacheHelper(this);
-        } catch (IOException e) {
-            Log.e("diskLruCacheHelper", e.toString());
-        }
+
 
         TextView title = (TextView) findViewById(R.id.book_name);
         title.setText(bookInfo.getTitle());
@@ -69,12 +64,13 @@ public class BookInfoActivity extends Activity {
             @Override
             public void onClick(View v) {
 //                加入书架
-                String ids = diskLruCacheHelper.getAsString(appConstant.CACHE_BOOK_ID);
+                String ids = null;
+                ids = DiskLruCacheHelper.getInstance().getAsString(appConstant.CACHE_BOOK_ID);
                 if(ids !=null){
                     idList =  Arrays.asList(ids.split(","));
                     if(bookInfo.get_id() !=null && !idList.contains(bookInfo.get_id())){
                         ids +=","+bookInfo.get_id();
-                        diskLruCacheHelper.put(appConstant.CACHE_BOOK_ID,ids);
+                        DiskLruCacheHelper.getInstance().put(appConstant.CACHE_BOOK_ID,ids);
                         Toast ss = Toast.makeText(context, "加入成功",Toast.LENGTH_LONG);
                         ss.show() ;
                     }else{
@@ -82,7 +78,7 @@ public class BookInfoActivity extends Activity {
                         ss.show() ;
                     }
                 }else{
-                    diskLruCacheHelper.put(appConstant.CACHE_BOOK_ID,bookInfo.get_id());
+                    DiskLruCacheHelper.getInstance().put(appConstant.CACHE_BOOK_ID,bookInfo.get_id());
                     Toast ss = Toast.makeText(context, "加入成功",Toast.LENGTH_LONG);
                     ss.show() ;
                 }

@@ -5,6 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Environment;
 import android.util.Log;
+import com.example.jingh.myapplication.AndroidApplication;
+import com.example.jingh.myapplication.utils.BookUtils;
+import okhttp3.OkHttpClient;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -12,9 +15,34 @@ import org.json.JSONObject;
 import java.io.*;
 
 /**
- * Created by zhy on 15/7/28.
+ * @param: 缓存 工具类 单例模式
+ * @return: 
+ * @auther: jingh
+ * @date: 2019/1/8 22:31
  */
 public class DiskLruCacheHelper {
+
+    /**
+     * 单例模式
+     */
+    private static DiskLruCacheHelper  diskLruCacheHelper;
+
+    public static DiskLruCacheHelper getInstance() {
+        if (diskLruCacheHelper == null) {
+            synchronized (DiskLruCacheHelper.class) {
+                if (diskLruCacheHelper == null) {
+                    try {
+                        diskLruCacheHelper = new DiskLruCacheHelper(AndroidApplication.getInstance());
+                    } catch (IOException e) {
+                        return null;
+                    }
+                }
+            }
+        }
+        return diskLruCacheHelper;
+    }
+
+
     private static final String DIR_NAME            = "diskCache";
     private static final int    MAX_COUNT           = 5 * 1024 * 1024;
     private static final int    DEFAULT_APP_VERSION = 1;
@@ -26,32 +54,20 @@ public class DiskLruCacheHelper {
 
     private static final String TAG = "DiskLruCacheHelper";
 
-    private DiskLruCache mDiskLruCache;
+    private  DiskLruCache mDiskLruCache;
 
-    public DiskLruCacheHelper(Context context) throws IOException {
+    private DiskLruCacheHelper(Context context) throws IOException {
         mDiskLruCache = generateCache(context, DIR_NAME, MAX_COUNT);
     }
 
-    public DiskLruCacheHelper(Context context, String dirName) throws IOException {
-        mDiskLruCache = generateCache(context, dirName, MAX_COUNT);
-    }
 
-    public DiskLruCacheHelper(Context context, String dirName, int maxCount) throws IOException {
-        mDiskLruCache = generateCache(context, dirName, maxCount);
-    }
 
     //custom cache dir
-    public DiskLruCacheHelper(File dir) throws IOException {
+    private DiskLruCacheHelper(File dir) throws IOException {
         mDiskLruCache = generateCache(null, dir, MAX_COUNT);
     }
 
-    public DiskLruCacheHelper(Context context, File dir) throws IOException {
-        mDiskLruCache = generateCache(context, dir, MAX_COUNT);
-    }
 
-    public DiskLruCacheHelper(Context context, File dir, int maxCount) throws IOException {
-        mDiskLruCache = generateCache(context, dir, maxCount);
-    }
 
     private DiskLruCache generateCache(Context context, File dir, int maxCount) throws IOException {
         if (!dir.exists() || !dir.isDirectory()) {

@@ -28,25 +28,19 @@ import java.util.List;
  */
 public class MyBookBottomBar extends Fragment {
 
-    private static  String [] bookIds = {"5a72f91a3f334879bf2a8275","5ab8999eba32357ab6ebab98","592fe687c60e3c4926b040ca","53e56ee335f79bb626a496c9","5b0d28378659ea1aab8ca218","59e2c2b08bde16e66f9e3b85","5816b415b06d1d32157790b1"};
+    private  String [] bookIds = {"5a72f91a3f334879bf2a8275","5ab8999eba32357ab6ebab98","592fe687c60e3c4926b040ca","53e56ee335f79bb626a496c9","5b0d28378659ea1aab8ca218","59e2c2b08bde16e66f9e3b85","5816b415b06d1d32157790b1"};
 
     private ListView listView;
 
-    private DiskLruCacheHelper diskLruCacheHelper ;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.bottom_my_book_list, container, false);
         listView = (ListView)view.findViewById(R.id.my_book_list);
-        try {
-            diskLruCacheHelper = new DiskLruCacheHelper(getActivity());
-            String ids = diskLruCacheHelper.getAsString(appConstant.CACHE_BOOK_ID);
-            if(ids !=null){
-                bookIds = ids.split(",");
-            }
-        } catch (IOException e) {
-
+        String ids = DiskLruCacheHelper.getInstance().getAsString(appConstant.CACHE_BOOK_ID);
+        if(ids !=null){
+            bookIds = ids.split(",");
         }
         new BookDataTask().execute(bookIds);
         return view;
@@ -58,10 +52,12 @@ public class MyBookBottomBar extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        String ids = diskLruCacheHelper.getAsString(appConstant.CACHE_BOOK_ID);
+        String ids = DiskLruCacheHelper.getInstance().getAsString(appConstant.CACHE_BOOK_ID);
         if(ids !=null){
-            bookIds = ids.split(",");
-            new BookDataTask().execute(bookIds);
+            if(bookIds.length != ids.split(",").length){
+                bookIds = ids.split(",");
+                new BookDataTask().execute(bookIds);
+            }
         }
     }
 
