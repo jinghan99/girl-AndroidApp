@@ -52,6 +52,19 @@ public class MyBookBottomBar extends Fragment {
         return view;
     }
 
+    /**
+     * 当页面在前台可操作时候会执行这个方法，刷新操作可以放在这个地方
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        String ids = diskLruCacheHelper.getAsString(appConstant.CACHE_BOOK_ID);
+        if(ids !=null){
+            bookIds = ids.split(",");
+            new BookDataTask().execute(bookIds);
+        }
+    }
+
 
     /*
      * 定义内部类： <Params, Progress, Result>，实现网络异步访问
