@@ -32,7 +32,7 @@ public class BookInfoActivity extends Activity {
         ((TextView)findViewById(R.id.book_author)).setText(bookInfo.getAuthor());
 
         ((TextView)findViewById(R.id.book_majorCate)).setText(bookInfo.getMajorCate());
-
+        ((TextView)findViewById(R.id.book_short_intro)).setText(bookInfo.getShortIntro());
         //加载图片
         Picasso.with(this).load(appConstant.imgUrlFirst+bookInfo.getCover()).into((ImageView)findViewById(R.id.book_image));
 
