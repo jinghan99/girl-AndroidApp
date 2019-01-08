@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fffff9"
+        android:background="@color/white_bg"
 >
 
     <!--我的书架 书籍信息 显示-->
@@ -13,7 +13,7 @@
             android:id="@+id/rank_book_image"
             android:layout_width="63dp"
             android:layout_height="90dp"
-            android:background="#d0d0d2"
+            android:background="@color/white_bg"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" android:layout_marginLeft="10dp"
             android:layout_marginTop="8dp"

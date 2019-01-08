@@ -9,7 +9,7 @@ android:layout_height="match_parent">
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/rank_book_list"
-            android:background="#feffff"
+            android:background="@color/white_bg"
             tools:layout_editor_absoluteY="8dp" tools:layout_editor_absoluteX="8dp">
     </ListView>
 </android.support.constraint.ConstraintLayout>
