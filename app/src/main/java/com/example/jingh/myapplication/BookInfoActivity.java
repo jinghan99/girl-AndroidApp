@@ -62,7 +62,7 @@ public class BookInfoActivity extends Activity {
         initListener();
 
         //加载章节信息
-        new BookInfoActivity.BookDataTask().execute(bookInfo.get_id());
+//        new BookInfoActivity.BookDataTask().execute(bookInfo.get_id());
 
     }
 
