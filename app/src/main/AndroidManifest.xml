@@ -20,9 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-                android:name=".BookInfoActivity"
-                android:theme="@style/AppTheme.Translucent.NoTitleBar">
+        <activity  android:name=".BookInfoActivity" >
+        </activity>
+        <activity android:name=".ChapterTextActivity">
         </activity>
     </application>
 

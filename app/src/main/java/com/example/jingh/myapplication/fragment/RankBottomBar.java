@@ -12,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.jingh.myapplication.R;
-import com.example.jingh.myapplication.appConstant.appConstant;
+import com.example.jingh.myapplication.appConstant.AppConstant;
 import com.example.jingh.myapplication.fragment.tab.*;
 import com.longsh.longshlibrary.PagerSlidingTabStrip;
 
@@ -98,13 +98,13 @@ public class RankBottomBar extends Fragment {
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return appConstant.MAN_TITLES[position];
+            return AppConstant.MAN_TITLES[position];
         }
 
 
         @Override
         public int getCount() {
-            return appConstant.MAN_TITLES.length;
+            return AppConstant.MAN_TITLES.length;
         }
 
         @Override

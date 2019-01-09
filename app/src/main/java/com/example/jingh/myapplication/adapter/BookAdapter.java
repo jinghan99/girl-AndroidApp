@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.jingh.myapplication.R;
-import com.example.jingh.myapplication.appConstant.appConstant;
+import com.example.jingh.myapplication.appConstant.AppConstant;
 import com.example.jingh.myapplication.entiy.BookInfo;
 import com.example.jingh.myapplication.utils.FormatUtils;
 import com.squareup.picasso.Picasso;
@@ -61,7 +61,7 @@ public class BookAdapter extends ArrayAdapter {
         update_time.setText(FormatUtils.getDescriptionTimeFromDate(book.getUpdated()));
 
         //加载图片
-        Picasso.with(context).load(appConstant.imgUrlFirst+book.getCover()).into((ImageView)view.findViewById(R.id.my_book_image));
+        Picasso.with(context).load(AppConstant.imgUrlFirst+book.getCover()).into((ImageView)view.findViewById(R.id.my_book_image));
 
         return view;
     }

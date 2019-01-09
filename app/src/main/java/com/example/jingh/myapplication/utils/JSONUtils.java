@@ -1,6 +1,6 @@
 package com.example.jingh.myapplication.utils;
 
-import com.example.jingh.myapplication.appConstant.appConstant;
+import com.example.jingh.myapplication.appConstant.AppConstant;
 import com.example.jingh.myapplication.entiy.UpdateBook;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,6 +34,17 @@ public class JSONUtils {
     private JSONUtils() {
     }
 
+
+    /**
+     * 将object对象转成Bean对象
+     * @param object
+     * @param cls
+     * @param <T>
+     * @return
+     */
+    public static <T> T GsonObjToBean(Object object,Class<T> cls) {
+       return GsonToBean(GsonString(object),cls);
+    }
 
     /**
      * 将object对象转成json字符串
@@ -119,7 +130,7 @@ public class JSONUtils {
 
     public static void main(String[] args) {
         OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder().url(appConstant.bookUpdateUrl).build();
+        Request request = new Request.Builder().url(AppConstant.bookUpdateUrl).build();
         Response response = null;
         try {
             response = client.newCall(request).execute();

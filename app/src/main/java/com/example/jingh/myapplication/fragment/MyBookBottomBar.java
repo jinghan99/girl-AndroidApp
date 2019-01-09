@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import com.example.jingh.myapplication.R;
 import com.example.jingh.myapplication.adapter.BookAdapter;
-import com.example.jingh.myapplication.appConstant.appConstant;
+import com.example.jingh.myapplication.appConstant.AppConstant;
 import com.example.jingh.myapplication.disk.DiskLruCacheHelper;
 import com.example.jingh.myapplication.entiy.BookInfo;
 import com.example.jingh.myapplication.utils.BizConstant;
@@ -38,7 +38,7 @@ public class MyBookBottomBar extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.bottom_my_book_list, container, false);
         listView = (ListView)view.findViewById(R.id.my_book_list);
-        String ids = DiskLruCacheHelper.getInstance().getAsString(appConstant.CACHE_BOOK_ID);
+        String ids = DiskLruCacheHelper.getInstance().getAsString(AppConstant.CACHE_BOOK_ID);
         if(ids !=null){
             bookIds = ids.split(",");
         }
@@ -52,7 +52,7 @@ public class MyBookBottomBar extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        String ids = DiskLruCacheHelper.getInstance().getAsString(appConstant.CACHE_BOOK_ID);
+        String ids = DiskLruCacheHelper.getInstance().getAsString(AppConstant.CACHE_BOOK_ID);
         if(ids !=null){
             if(bookIds.length != ids.split(",").length){
                 bookIds = ids.split(",");

@@ -7,7 +7,7 @@ package com.example.jingh.myapplication.appConstant;
  * @Author jinghan
  * @Version 1.0
  */
-public class appConstant {
+public class AppConstant {
 
     public static final String CACHE_BOOK_ID="cache_Book_Id";
 
@@ -19,4 +19,18 @@ public class appConstant {
     public static final String[] MAN_TITLES = {"最热榜", "好评榜", "热搜榜", "潜力榜", "完结榜", "纵横榜", "和阅读榜"};
 
 
+    /**
+     * 书籍来源 bookId 替换为 bookId
+     */
+    public static final String BOOK_SOURCE ="http://api.zhuishushenqi.com/toc?view=summary&book=bookId";
+
+    /**
+     * bookId = 替换为 书籍来源id
+     */
+    public static final String BOOK_CHAPTER ="http://api.zhuishushenqi.com/btoc/bookId?view=chapters";
+
+    /**
+     * CHAPTER_TEXT = 替换为 书籍text
+     */
+    public static final String CHAPTER_TEXT ="http://chapter2.zhuishushenqi.com/chapter/CHAPTER_TEXT";
 }
