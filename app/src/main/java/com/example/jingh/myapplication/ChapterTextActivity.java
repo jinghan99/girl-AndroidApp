@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
+import com.example.jingh.myapplication.adapter.MyPagerAdapter;
 import com.example.jingh.myapplication.entiy.BookChapter;
 import com.example.jingh.myapplication.entiy.BookInfo;
 import com.example.jingh.myapplication.entiy.BookSource;
@@ -14,6 +16,7 @@ import com.example.jingh.myapplication.utils.BookUtils;
 import com.example.jingh.myapplication.utils.Utils;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,19 +33,20 @@ public class ChapterTextActivity extends Activity {
 
     private List<BookChapter> bookChapterList;
 
-    private TextView titleView;
+    private int chapterPostion = 0;
 
-    private TextView bodyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = this;
         bookInfo = (BookInfo) getIntent().getSerializableExtra("bookInfo");
-        setContentView(R.layout.book_text);
-        titleView = (TextView) findViewById(R.id.chapter_text_title);
-        bodyView = (TextView) findViewById(R.id.chapter_text_body);
+//        setContentView(R.layout.book_text);
+//        titleView = (TextView) findViewById(R.id.chapter_text_title);
+//        bodyView = (TextView) findViewById(R.id.chapter_text_body);
         new ChapterTextActivity.BookDataTask().execute(bookInfo.get_id());
+        setContentView(R.layout.book_text_view_pager);
+
     }
 
     /*
@@ -62,7 +66,7 @@ public class ChapterTextActivity extends Activity {
                     String sourceId =bookSource.get(1).get_id();
                     bookChapterList = BookUtils.getBookChapterList(sourceId);
                     if(bookChapterList !=null && bookChapterList.size()>0){
-                        String link = bookChapterList.get(0).getLink();
+                        String link = bookChapterList.get(chapterPostion).getLink();
                         return BookUtils.getBookChapterText(Utils.getURLEncoderString(link)) ;
                     }
                 }
@@ -78,13 +82,27 @@ public class ChapterTextActivity extends Activity {
          * @param chapterText
          */
         @Override
-        protected void onPostExecute(final ChapterText chapterText) {
+        protected void onPostExecute(ChapterText chapterText) {
             super.onPostExecute(chapterText);
             if(chapterText !=null ){
-                titleView.setText(chapterText.getTitle());
-                bodyView.setText(chapterText.getBody());
-                bodyView.setMovementMethod(ScrollingMovementMethod.getInstance());
+                setVp(chapterText);
             }
         }
+    }
+    private void setVp(ChapterText chapterText) {
+        List<String> list = new ArrayList<>();
+        String body = chapterText.getBody();
+        int pageSize = 400;
+        int pageNum = body.length() / pageSize + 1;
+        for (int i = 0; i < pageNum; i++) {
+            if(body.length() >pageSize ){
+                list.add( body.substring(0,pageSize));
+                body = body.substring(pageSize);
+            }else{
+                list.add(body);
+            }
+        }
+        ViewPager vp = (ViewPager) findViewById(R.id.text_view_pager);
+        vp.setAdapter(new MyPagerAdapter(this,list,chapterText));
     }
 }
