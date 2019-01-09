@@ -2,25 +2,17 @@ package com.example.jingh.myapplication;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.TextView;
-import com.example.jingh.myapplication.adapter.RankBookAdapter;
 import com.example.jingh.myapplication.entiy.BookChapter;
 import com.example.jingh.myapplication.entiy.BookInfo;
 import com.example.jingh.myapplication.entiy.BookSource;
 import com.example.jingh.myapplication.entiy.ChapterText;
-import com.example.jingh.myapplication.fragment.MyBookBottomBar;
-import com.example.jingh.myapplication.utils.BizConstant;
 import com.example.jingh.myapplication.utils.BookUtils;
 import com.example.jingh.myapplication.utils.Utils;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -64,7 +56,6 @@ public class ChapterTextActivity extends Activity {
         @Override
         protected ChapterText doInBackground(String... ids) {
             try {
-
                 List<BookSource> bookSource = BookUtils.getBookSource(bookInfo.get_id());
                 if(bookSource.size()>1){
                     String sourceId =bookSource.get(1).get_id();
