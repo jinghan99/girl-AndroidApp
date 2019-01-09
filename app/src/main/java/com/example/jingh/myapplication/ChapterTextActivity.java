@@ -41,9 +41,6 @@ public class ChapterTextActivity extends Activity {
         super.onCreate(savedInstanceState);
         context = this;
         bookInfo = (BookInfo) getIntent().getSerializableExtra("bookInfo");
-//        setContentView(R.layout.book_text);
-//        titleView = (TextView) findViewById(R.id.chapter_text_title);
-//        bodyView = (TextView) findViewById(R.id.chapter_text_body);
         new ChapterTextActivity.BookDataTask().execute(bookInfo.get_id());
         setContentView(R.layout.book_text_view_pager);
 
