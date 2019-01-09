@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.widget.TextView;
 import com.example.jingh.myapplication.entiy.BookChapter;
 import com.example.jingh.myapplication.entiy.BookInfo;
@@ -69,7 +70,6 @@ public class ChapterTextActivity extends Activity {
             } catch (IOException e) {
                 return null;
             }
-
         }
         /**
          * 执行完后台任务后更新UI
@@ -82,6 +82,7 @@ public class ChapterTextActivity extends Activity {
             if(chapterText !=null ){
                 titleView.setText(chapterText.getTitle());
                 bodyView.setText(chapterText.getBody());
+                bodyView.setMovementMethod(ScrollingMovementMethod.getInstance());
             }
         }
     }
