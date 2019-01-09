@@ -3,7 +3,9 @@ package com.example.jingh.myapplication;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +14,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.jingh.myapplication.appConstant.AppConstant;
 import com.example.jingh.myapplication.disk.DiskLruCacheHelper;
+import com.example.jingh.myapplication.entiy.BookChapter;
 import com.example.jingh.myapplication.entiy.BookInfo;
+import com.example.jingh.myapplication.entiy.BookSource;
+import com.example.jingh.myapplication.entiy.ChapterText;
 import com.example.jingh.myapplication.helper.SwipeHelper;
+import com.example.jingh.myapplication.utils.BookUtils;
+import com.example.jingh.myapplication.utils.Utils;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -34,10 +42,11 @@ public class BookInfoActivity extends Activity {
 
     private Button startRead;
 
-
     private Context context;
 
     private List idList;
+
+    private List<BookChapter> bookChapterList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +60,9 @@ public class BookInfoActivity extends Activity {
         Picasso.with(this).load(AppConstant.imgUrlFirst + bookInfo.getCover()).into((ImageView) findViewById(R.id.book_image));
 
         initListener();
+
+        //加载章节信息
+        new BookInfoActivity.BookDataTask().execute(bookInfo.get_id());
 
     }
 
@@ -99,6 +111,7 @@ public class BookInfoActivity extends Activity {
 //                开始阅读
                 Intent intent=new Intent(context,ChapterTextActivity.class);
                 intent.putExtra("bookInfo", (Serializable) bookInfo);
+                intent.putExtra("bookChapterList", (Serializable) bookChapterList);
                 startActivity(intent);
             }
         });
@@ -112,5 +125,30 @@ public class BookInfoActivity extends Activity {
             return true;
         }
         return super.dispatchTouchEvent(ev);
+    }
+
+    /*
+     * 定义内部类： <Params, Progress, Result>，实现网络异步访问
+     */
+    class BookDataTask extends AsyncTask<String, Void,List<BookChapter>> {
+        /**
+         * 异步处理 获取章节信息
+         * @param   ids
+         * @return
+         */
+        @Override
+        protected List<BookChapter> doInBackground(String... ids) {
+            try {
+                List<BookSource> bookSource = BookUtils.getBookSource(bookInfo.get_id());
+                if(bookSource.size()>1){
+                    String sourceId =bookSource.get(1).get_id();
+                    bookChapterList = BookUtils.getBookChapterList(sourceId);
+                }
+                return null;
+            } catch (IOException e) {
+                return null;
+            }
+        }
+
     }
 }

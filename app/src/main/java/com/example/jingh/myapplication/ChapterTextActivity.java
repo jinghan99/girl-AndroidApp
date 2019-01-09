@@ -70,6 +70,7 @@ public class ChapterTextActivity extends Activity {
             } catch (IOException e) {
                 return null;
             }
+
         }
         /**
          * 执行完后台任务后更新UI
