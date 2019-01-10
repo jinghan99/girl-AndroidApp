@@ -86,6 +86,13 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
 
     }
 
+    /**
+     * 创建一个承载Text的View
+     *
+     * @param direction
+     *
+     * @return
+     */
     @Override
     public View createView(final int direction) {
         String txt = "";
@@ -114,17 +121,29 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
         System.out.println("-top->" + currentTopEndIndex + "-show->" + currentShowEndIndex + "--bottom-->" + currentBottomEndIndex);
         return view;
     }
-
+    /**
+     * 当前页是否有上一页（用来判断可滑动性）
+     *
+     * @return
+     */
     @Override
     public boolean whetherHasPreviousPage() {
         return currentShowEndIndex > COUNT;
     }
-
+    /***
+     * 当前页是否有下一页（用来判断可滑动性）
+     *
+     * @return
+     */
     @Override
     public boolean whetherHasNextPage() {
         return currentShowEndIndex < textLenght;
     }
-
+    /***
+     * 当前页是否是第一页
+     *
+     * @return
+     */
     @Override
     public boolean currentIsFirstPage() {
         boolean should = currentTopEndIndex > COUNT;
@@ -135,7 +154,11 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
         }
         return should;
     }
-
+    /***
+     * 当前页是否是最后一页
+     *
+     * @return
+     */
     @Override
     public boolean currentIsLastPage() {
         boolean should = currentBottomEndIndex < textLenght;
