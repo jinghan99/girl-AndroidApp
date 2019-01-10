@@ -109,7 +109,7 @@ public class BookInfoActivity extends Activity {
             @Override
             public void onClick(View v) {
 //                开始阅读
-                Intent intent=new Intent(context,ChapterTextActivityNew.class);
+                Intent intent=new Intent(context,ChapterTextActivityThree.class);
                 intent.putExtra("bookInfo", (Serializable) bookInfo);
                 intent.putExtra("bookChapterList", (Serializable) bookChapterList);
                 startActivity(intent);

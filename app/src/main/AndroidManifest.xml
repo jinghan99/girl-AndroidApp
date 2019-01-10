@@ -24,6 +24,7 @@
         </activity>
         <activity android:name=".ChapterTextActivity"> </activity>
         <activity android:name=".ChapterTextActivityNew"> </activity>
+        <activity android:name=".ChapterTextActivityThree"> </activity>
     </application>
 
 </manifest>
