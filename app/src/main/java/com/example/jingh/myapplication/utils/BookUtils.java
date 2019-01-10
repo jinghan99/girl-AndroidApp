@@ -1,6 +1,7 @@
 package com.example.jingh.myapplication.utils;
 
 import com.example.jingh.myapplication.appConstant.AppConstant;
+import com.example.jingh.myapplication.disk.DiskLruCacheHelper;
 import com.example.jingh.myapplication.entiy.BookChapter;
 import com.example.jingh.myapplication.entiy.BookInfo;
 import com.example.jingh.myapplication.entiy.BookSource;
@@ -11,6 +12,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -96,6 +98,8 @@ public class BookUtils {
      */
     public static List<BookChapter> getBookChapterList(String bookId) throws IOException {
         List<BookChapter> chapterList = new ArrayList<>();
+//        判断是否缓存
+        //                    章节目录缓存
         Request request = new Request.Builder().url(AppConstant.BOOK_CHAPTER.replace("bookId",bookId)).build();
         Call call = getInstance().newCall(request);
         String result = call.execute().body().string();
@@ -107,6 +111,8 @@ public class BookUtils {
                 chapterList.add(JSONUtils.GsonObjToBean(linkedTreeMap,BookChapter.class));
             }
         }
+//        缓存更新章节来源
+        DiskLruCacheHelper.getInstance().put(bookId, (Serializable) chapterList);
         return chapterList;
     }
     /**

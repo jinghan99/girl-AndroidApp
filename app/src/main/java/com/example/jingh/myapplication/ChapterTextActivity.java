@@ -57,21 +57,21 @@ public class ChapterTextActivity extends Activity {
          */
         @Override
         protected ChapterText doInBackground(String... ids) {
-            try {
-                List<BookSource> bookSource = BookUtils.getBookSource(bookInfo.get_id());
-                if(bookSource.size()>1){
-                    String sourceId =bookSource.get(1).get_id();
-                    bookChapterList = BookUtils.getBookChapterList(sourceId);
-                    if(bookChapterList !=null && bookChapterList.size()>0){
-                        String link = bookChapterList.get(chapterPostion).getLink();
-                        return BookUtils.getBookChapterText(Utils.getURLEncoderString(link)) ;
-                    }
-                }
-                return null;
-            } catch (IOException e) {
-                return null;
-            }
-
+//            try {
+//                List<BookSource> bookSource = BookUtils.getBookSource(bookInfo.get_id());
+//                if(bookSource.size()>1){
+//                    String sourceId =bookSource.get(1).get_id();
+//                    bookChapterList = BookUtils.getBookChapterList(sourceId);
+//                    if(bookChapterList !=null && bookChapterList.size()>0){
+//                        String link = bookChapterList.get(chapterPostion).getLink();
+//                        return BookUtils.getBookChapterText(Utils.getURLEncoderString(link)) ;
+//                    }
+//                }
+//                return null;
+//            } catch (IOException e) {
+//                return null;
+//            }
+            return null;
         }
         /**
          * 执行完后台任务后更新UI
@@ -82,24 +82,24 @@ public class ChapterTextActivity extends Activity {
         protected void onPostExecute(ChapterText chapterText) {
             super.onPostExecute(chapterText);
             if(chapterText !=null ){
-                setVp(chapterText);
+//                setVp(chapterText);
             }
         }
     }
-    private void setVp(ChapterText chapterText) {
-        List<String> list = new ArrayList<>();
-        String body = chapterText.getBody();
-        int pageSize = 400;
-        int pageNum = body.length() / pageSize + 1;
-        for (int i = 0; i < pageNum; i++) {
-            if(body.length() >pageSize ){
-                list.add( body.substring(0,pageSize));
-                body = body.substring(pageSize);
-            }else{
-                list.add(body);
-            }
-        }
-        ViewPager vp = (ViewPager) findViewById(R.id.text_view_pager);
-        vp.setAdapter(new MyPagerAdapter(this,list,chapterText));
-    }
+//    private void setVp(ChapterText chapterText) {
+//        List<String> list = new ArrayList<>();
+//        String body = chapterText.getBody();
+//        int pageSize = 400;
+//        int pageNum = body.length() / pageSize + 1;
+//        for (int i = 0; i < pageNum; i++) {
+//            if(body.length() >pageSize ){
+//                list.add( body.substring(0,pageSize).replaceAll("\n","\n    "));
+//                body = body.substring(pageSize);
+//            }else{
+//                list.add(body);
+//            }
+//        }
+//        ViewPager vp = (ViewPager) findViewById(R.id.text_view_pager);
+//        vp.setAdapter(new MyPagerAdapter(this,list,chapterText));
+//    }
 }

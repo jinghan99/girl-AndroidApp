@@ -3,6 +3,8 @@ package com.example.jingh.myapplication;
 import android.app.Application;
 import android.content.Context;
 import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.WindowManager;
 import android.widget.Toast;
 import com.example.jingh.myapplication.helper.ActivityLifeHelper;
 
@@ -46,6 +48,19 @@ public class AndroidApplication extends Application {
     public static Context getContext() {
         return context;
     }
+
+    public static WindowManager getWindowManager(){
+        // 获取屏幕宽高，获取单个文字的高度、宽度；根据现有的尺寸，来判断可以容纳多少个字，超出就使用第二种布局
+//        WindowManager wm = ;
+        //148.94469   32.8125
+//        int width = wm.getDefaultDisplay().getWidth();
+//        int height = wm.getDefaultDisplay().getHeight();
+
+        return (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+
+    }
+
+
 
     /**
      * 初始化当前设备屏幕宽高
