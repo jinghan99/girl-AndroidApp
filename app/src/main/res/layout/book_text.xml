@@ -26,12 +26,11 @@
                   app:layout_constraintRight_toRightOf="parent" app:layout_constraintLeft_toLeftOf="parent"
                    />
 
-        <me.biubiubiu.justifytext.library.JustifyTextView
+        <com.example.jingh.myapplication.helper.JustifyTextViewHelp
             android:id="@+id/chapter_text_body"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/eye"
-            android:scrollbars = "horizontal"
             android:text="内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容"
             android:textSize="18dp"
             android:layout_marginTop="5dp"
