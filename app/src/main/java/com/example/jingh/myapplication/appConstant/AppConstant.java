@@ -12,6 +12,8 @@ public class AppConstant {
     public static final String CACHE_BOOK_ID="cache_Book_Id";
 
     public static final String CACHE_BOOK_SOURCE_ID="CACHE_BOOK_SOURCE_ID";
+
+
     public static final String imgUrlFirst = "http://statics.zhuishushenqi.com";
 
     //小说连载 更新 信息

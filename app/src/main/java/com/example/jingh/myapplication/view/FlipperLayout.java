@@ -5,349 +5,326 @@ import android.util.AttributeSet;
 import android.view.*;
 import android.widget.Scroller;
 
+import com.example.jingh.myapplication.listener.TouchListener;
+
 public class FlipperLayout extends ViewGroup {
 
-	private Scroller        mScroller;
-	private VelocityTracker mVelocityTracker;
+    private Scroller mScroller;
 
-	private int mVelocityValue = 0;
+    private VelocityTracker mVelocityTracker;
 
-	/** 商定这个滑动是否有效的距离 */
-	private int limitDistance = 0;
+    private TouchListener mListener;
 
-	private int screenWidth = 0;
+    private int mVelocityValue = 0;
 
-	/** 手指移动的方向 */
-	private static final int MOVE_TO_LEFT = 0;
-	private static final int MOVE_TO_RIGHT = 1;
-	private static final int MOVE_NO_RESULT = 2;
+    /**
+     * 商定这个滑动是否有效的距离
+     */
+    private int limitDistance = 0;
 
-	/** 最后触摸的结果方向 */
-	private int mTouchResult = MOVE_NO_RESULT;
-	/** 一开始的方向 */
-	private int mDirection = MOVE_NO_RESULT;
+    /**
+     * 屏幕宽度
+     */
+    private int screenWidth = 0;
 
-	/** 触摸的模式 */
-	private static final int MODE_NONE = 0;
-	private static final int MODE_MOVE = 1;
+    /**
+     * 手指移动的方向
+     */
+    private static final int MOVE_TO_LEFT = 0;
+    private static final int MOVE_TO_RIGHT = 1;
+    private static final int MOVE_NO_RESULT = 2;
 
-	private int mMode = MODE_NONE;
+    /**
+     * 最后触摸的结果方向
+     */
+    private int mTouchResult = MOVE_NO_RESULT;
+    /**
+     * 一开始的方向
+     */
+    private int mDirection = MOVE_NO_RESULT;
 
-	/** 滑动的view */
-	private View mScrollerView = null;
+    /**
+     * 触摸的模式
+     */
+    private static final int MODE_NONE = 0;
+    private static final int MODE_MOVE = 1;
 
-	/** 最上层的view（处于边缘的，看不到的） */
-	private View currentTopView = null;
+    private int mMode = MODE_NONE;
 
-	/** 显示的view，显示在屏幕 */
-	private View currentShowView = null;
+    private int startX = 0;
 
-	/** 最底层的view（看不到的） */
-	private View currentBottomView = null;
+    /**
+     * 滑动的view
+     */
+    private View mScrollerView = null;
 
-	public FlipperLayout(Context context) {
-		super(context);
-		init(context);
-	}
+    /**
+     * 最上层的view（处于边缘的，看不到的）
+     */
+    private View currentTopView = null;
 
-	public FlipperLayout(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		init(context);
-	}
+    /**
+     * 显示的view，显示在屏幕
+     */
+    private View currentShowView = null;
 
-	public FlipperLayout(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		init(context);
-	}
+    /**
+     * 最底层的view（看不到的）
+     */
+    private View currentBottomView = null;
 
-	private void init(Context context) {
-		mScroller = new Scroller(context);
-		screenWidth = context.getResources().getDisplayMetrics().widthPixels;
-		limitDistance = screenWidth / 3;
-	}
+    public FlipperLayout(Context context) {
+        super(context);
+        init(context);
+    }
 
-	/***
-	 * 初始化三个view
-	 * @param listener
-	 * @param currentBottomView 最底层的view，初始状态看不到
-	 * @param currentShowView 正在显示的View
-	 * @param currentTopView 最上层的View，初始化时滑出屏幕
-	 */
-	public void initFlipperViews(TouchListener listener, View currentBottomView, View currentShowView, View currentTopView) {
-		this.currentBottomView = currentBottomView;
-		this.currentShowView = currentShowView;
-		this.currentTopView = currentTopView;
-		setTouchResultListener(listener);
-		addView(currentBottomView);
-		addView(currentShowView);
-		addView(currentTopView);
-		/** 默认将最上层的view滑动的边缘（用于查看上一页） */
-		currentTopView.scrollTo(-screenWidth, 0);
-	}
+    public FlipperLayout(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(context);
+    }
 
-	@Override
-	protected void onLayout(boolean changed, int l, int t, int r, int b) {
-		for (int i = 0; i < getChildCount(); i++) {
-			View child = getChildAt(i);
-			int height = child.getMeasuredHeight();
-			int width = child.getMeasuredWidth();
-			child.layout(0, 0, width, height);
-		}
-	}
+    public FlipperLayout(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(context);
+    }
 
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		int width = MeasureSpec.getSize(widthMeasureSpec);
-		int height = MeasureSpec.getSize(heightMeasureSpec);
-		setMeasuredDimension(width, height);
-		for (int i = 0; i < getChildCount(); i++) {
-			getChildAt(i).measure(widthMeasureSpec, heightMeasureSpec);
-		}
-	}
+    private void init(Context context) {
+        mScroller = new Scroller(context);
+        screenWidth = context.getResources().getDisplayMetrics().widthPixels;
+        limitDistance = screenWidth / 3;
+    }
 
-	private int startX = 0;
+    /***
+     * 初始化三个view
+     * @param listener
+     * @param currentBottomView 最底层的view，初始状态看不到
+     * @param currentShowView 正在显示的View
+     * @param currentTopView 最上层的View，初始化时滑出屏幕
+     */
+    public void initFlipperViews(TouchListener listener, View currentBottomView, View currentShowView, View currentTopView) {
+        this.currentBottomView = currentBottomView;
+        this.currentShowView = currentShowView;
+        this.currentTopView = currentTopView;
+        setTouchResultListener(listener);
+        addView(currentBottomView);
+        addView(currentShowView);
+        addView(currentTopView);
+        /** 默认将最上层的view滑动的边缘（用于查看上一页） */
+        currentTopView.scrollTo(-screenWidth, 0);
+    }
 
-	@Override
-	public boolean dispatchTouchEvent(MotionEvent ev) {
-		switch (ev.getAction()) {
-		case MotionEvent.ACTION_DOWN:
-			if (!mScroller.isFinished()) {
-				break;
-			}
-			startX = (int) ev.getX();
-			break;
-		}
-		return super.dispatchTouchEvent(ev);
-	}
+    @Override
+    protected void onLayout(boolean changed, int l, int t, int r, int b) {
+        for (int i = 0; i < getChildCount(); i++) {
+            View child = getChildAt(i);
+            int height = child.getMeasuredHeight();
+            int width = child.getMeasuredWidth();
+            child.layout(0, 0, width, height);
+        }
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		obtainVelocityTracker(event);
-		switch (event.getAction()) {
-		case MotionEvent.ACTION_MOVE:
-			if (!mScroller.isFinished()) {
-				return super.onTouchEvent(event);
-			}
-			if (startX == 0) {
-				startX = (int) event.getX();
-			}
-			final int distance = startX - (int) event.getX();
-			if (mDirection == MOVE_NO_RESULT) {
-				if (mListener.whetherHasNextPage() && distance > 0) {
-					mDirection = MOVE_TO_LEFT;
-				} else if (mListener.whetherHasPreviousPage() && distance < 0) {
-					mDirection = MOVE_TO_RIGHT;
-				}
-			}
-			if (mMode == MODE_NONE
-					&& ((mDirection == MOVE_TO_LEFT && mListener.whetherHasNextPage()) || (mDirection == MOVE_TO_RIGHT && mListener
-							.whetherHasPreviousPage()))) {
-				mMode = MODE_MOVE;
-			}
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        int width = MeasureSpec.getSize(widthMeasureSpec);
+        int height = MeasureSpec.getSize(heightMeasureSpec);
+        setMeasuredDimension(width, height);
+        for (int i = 0; i < getChildCount(); i++) {
+            getChildAt(i).measure(widthMeasureSpec, heightMeasureSpec);
+        }
+    }
 
-			if (mMode == MODE_MOVE) {
-				if ((mDirection == MOVE_TO_LEFT && distance <= 0) || (mDirection == MOVE_TO_RIGHT && distance >= 0)) {
-					mMode = MODE_NONE;
-				}
-			}
 
-			if (mDirection != MOVE_NO_RESULT) {
-				if (mDirection == MOVE_TO_LEFT) {
-					if (mScrollerView != currentShowView) {
-						mScrollerView = currentShowView;
-					}
-				} else {
-					if (mScrollerView != currentTopView) {
-						mScrollerView = currentTopView;
-					}
-				}
-				if (mMode == MODE_MOVE) {
-					mVelocityTracker.computeCurrentVelocity(1000, ViewConfiguration.getMaximumFlingVelocity());
-					if (mDirection == MOVE_TO_LEFT) {
-						mScrollerView.scrollTo(distance, 0);
-					} else {
-						mScrollerView.scrollTo(screenWidth + distance, 0);
-					}
-				} else {
-					final int scrollX = mScrollerView.getScrollX();
-					if (mDirection == MOVE_TO_LEFT && scrollX != 0 && mListener.whetherHasNextPage()) {
-						mScrollerView.scrollTo(0, 0);
-					} else if (mDirection == MOVE_TO_RIGHT && mListener.whetherHasPreviousPage() && screenWidth != Math.abs(scrollX)) {
-						mScrollerView.scrollTo(-screenWidth, 0);
-					}
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        switch (ev.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (!mScroller.isFinished()) {
+                    break;
+                }
+                startX = (int) ev.getX();
+                break;
+        }
+        return super.dispatchTouchEvent(ev);
+    }
 
-				}
-			}
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        obtainVelocityTracker(event);
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_MOVE:
+                if (!mScroller.isFinished()) {
+                    return super.onTouchEvent(event);
+                }
+                if (startX == 0) {
+                    startX = (int) event.getX();
+                }
+                final int distance = startX - (int) event.getX();
+                if (mDirection == MOVE_NO_RESULT) {
+                    if (mListener.whetherHasNextPage() && distance > 0) {
+                        mDirection = MOVE_TO_LEFT;
+                    } else if (mListener.whetherHasPreviousPage() && distance < 0) {
+                        mDirection = MOVE_TO_RIGHT;
+                    }
+                }
+                if (mMode == MODE_NONE
+                        && ((mDirection == MOVE_TO_LEFT && mListener.whetherHasNextPage()) || (mDirection == MOVE_TO_RIGHT && mListener
+                        .whetherHasPreviousPage()))) {
+                    mMode = MODE_MOVE;
+                }
 
-			break;
+                if (mMode == MODE_MOVE) {
+                    if ((mDirection == MOVE_TO_LEFT && distance <= 0) || (mDirection == MOVE_TO_RIGHT && distance >= 0)) {
+                        mMode = MODE_NONE;
+                    }
+                }
 
-		case MotionEvent.ACTION_UP:
-			if (mScrollerView == null) {
-				return super.onTouchEvent(event);
-			}
-			final int scrollX = mScrollerView.getScrollX();
-			mVelocityValue = (int) mVelocityTracker.getXVelocity();
-			// scroll左正，右负(),(startX + dx)的值如果为0，即复位
-			/*
-			 * android.widget.Scroller.startScroll( int startX, int startY, int
-			 * dx, int dy, int duration )
-			 */
+                if (mDirection != MOVE_NO_RESULT) {
+                    if (mDirection == MOVE_TO_LEFT) {
+                        if (mScrollerView != currentShowView) {
+                            mScrollerView = currentShowView;
+                        }
+                    } else {
+                        if (mScrollerView != currentTopView) {
+                            mScrollerView = currentTopView;
+                        }
+                    }
+                    if (mMode == MODE_MOVE) {
+                        mVelocityTracker.computeCurrentVelocity(1000, ViewConfiguration.getMaximumFlingVelocity());
+                        if (mDirection == MOVE_TO_LEFT) {
+                            mScrollerView.scrollTo(distance, 0);
+                        } else {
+                            mScrollerView.scrollTo(screenWidth + distance, 0);
+                        }
+                    } else {
+                        final int scrollX = mScrollerView.getScrollX();
+                        if (mDirection == MOVE_TO_LEFT && scrollX != 0 && mListener.whetherHasNextPage()) {
+                            mScrollerView.scrollTo(0, 0);
+                        } else if (mDirection == MOVE_TO_RIGHT && mListener.whetherHasPreviousPage() && screenWidth != Math.abs(scrollX)) {
+                            mScrollerView.scrollTo(-screenWidth, 0);
+                        }
 
-			int time = 500;
+                    }
+                }
 
-			if (mMode == MODE_MOVE && mDirection == MOVE_TO_LEFT) {
-				if (scrollX > limitDistance || mVelocityValue < -time) {
-					// 手指向左移动，可以翻屏幕
-					mTouchResult = MOVE_TO_LEFT;
-					if (mVelocityValue < -time) {
-						time = 200;
-					}
-					mScroller.startScroll(scrollX, 0, screenWidth - scrollX, 0, time);
-				} else {
-					mTouchResult = MOVE_NO_RESULT;
-					mScroller.startScroll(scrollX, 0, -scrollX, 0, time);
-				}
-			} else if (mMode == MODE_MOVE && mDirection == MOVE_TO_RIGHT) {
-				if ((screenWidth - scrollX) > limitDistance || mVelocityValue > time) {
-					// 手指向右移动，可以翻屏幕
-					mTouchResult = MOVE_TO_RIGHT;
-					if (mVelocityValue > time) {
-						time = 250;
-					}
-					mScroller.startScroll(scrollX, 0, -scrollX, 0, time);
-				} else {
-					mTouchResult = MOVE_NO_RESULT;
-					mScroller.startScroll(scrollX, 0, screenWidth - scrollX, 0, time);
-				}
-			}
-			resetVariables();
-			postInvalidate();
-			break;
-		}
-		return true;
-	}
+                break;
 
-	private void resetVariables() {
-		mDirection = MOVE_NO_RESULT;
-		mMode = MODE_NONE;
-		startX = 0;
-		releaseVelocityTracker();
-	}
+            case MotionEvent.ACTION_UP:
+                if (mScrollerView == null) {
+                    return super.onTouchEvent(event);
+                }
+                final int scrollX = mScrollerView.getScrollX();
+                mVelocityValue = (int) mVelocityTracker.getXVelocity();
+                // scroll左正，右负(),(startX + dx)的值如果为0，即复位
+                /*
+                 * android.widget.Scroller.startScroll( int startX, int startY, int
+                 * dx, int dy, int duration )
+                 */
 
-	private TouchListener mListener;
+                int time = 500;
 
-	private void setTouchResultListener(TouchListener listener) {
-		this.mListener = listener;
-	}
+                if (mMode == MODE_MOVE && mDirection == MOVE_TO_LEFT) {
+                    if (scrollX > limitDistance || mVelocityValue < -time) {
+                        // 手指向左移动，可以翻屏幕
+                        mTouchResult = MOVE_TO_LEFT;
+                        if (mVelocityValue < -time) {
+                            time = 200;
+                        }
+                        mScroller.startScroll(scrollX, 0, screenWidth - scrollX, 0, time);
+                    } else {
+                        mTouchResult = MOVE_NO_RESULT;
+                        mScroller.startScroll(scrollX, 0, -scrollX, 0, time);
+                    }
+                } else if (mMode == MODE_MOVE && mDirection == MOVE_TO_RIGHT) {
+                    if ((screenWidth - scrollX) > limitDistance || mVelocityValue > time) {
+                        // 手指向右移动，可以翻屏幕
+                        mTouchResult = MOVE_TO_RIGHT;
+                        if (mVelocityValue > time) {
+                            time = 250;
+                        }
+                        mScroller.startScroll(scrollX, 0, -scrollX, 0, time);
+                    } else {
+                        mTouchResult = MOVE_NO_RESULT;
+                        mScroller.startScroll(scrollX, 0, screenWidth - scrollX, 0, time);
+                    }
+                }
+                resetVariables();
+                postInvalidate();
+                break;
+        }
+        return true;
+    }
 
-	@Override
-	public void computeScroll() {
-		super.computeScroll();
-		if (mScroller.computeScrollOffset()) {
-			mScrollerView.scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
-			postInvalidate();
-		} else if (mScroller.isFinished() && mListener != null && mTouchResult != MOVE_NO_RESULT) {
-			if (mTouchResult == MOVE_TO_LEFT) {
-				if (currentTopView != null) {
-					removeView(currentTopView);
-				}
-				currentTopView = mScrollerView;
-				currentShowView = currentBottomView;
-				if (mListener.currentIsLastPage()) {
-					final View newView = mListener.createView(mTouchResult);
-					currentBottomView = newView;
-					addView(newView, 0);
-				} else {
-					currentBottomView = new View(getContext());
-					currentBottomView.setVisibility(View.GONE);
-					addView(currentBottomView, 0);
-				}
-			} else {
-				if (currentBottomView != null) {
-					removeView(currentBottomView);
-				}
-				currentBottomView = currentShowView;
-				currentShowView = mScrollerView;
-				if (mListener.currentIsFirstPage()) {
-					final View newView = mListener.createView(mTouchResult);
-					currentTopView = newView;
-					currentTopView.scrollTo(-screenWidth, 0);
-					addView(currentTopView);
-				} else {
-					currentTopView = new View(getContext());
-					currentTopView.scrollTo(-screenWidth, 0);
-					currentTopView.setVisibility(View.GONE);
-					addView(currentTopView);
-				}
-			}
-			mTouchResult = MOVE_NO_RESULT;
-		}
-	}
+    private void resetVariables() {
+        mDirection = MOVE_NO_RESULT;
+        mMode = MODE_NONE;
+        startX = 0;
+        releaseVelocityTracker();
+    }
 
-	private void obtainVelocityTracker(MotionEvent event) {
-		if (mVelocityTracker == null) {
-			mVelocityTracker = VelocityTracker.obtain();
-		}
-		mVelocityTracker.addMovement(event);
-	}
 
-	private void releaseVelocityTracker() {
-		if (mVelocityTracker != null) {
-			mVelocityTracker.recycle();
-			mVelocityTracker = null;
-		}
-	}
+    private void setTouchResultListener(TouchListener listener) {
+        this.mListener = listener;
+    }
 
-	/***
-	 * 用来实时回调触摸事件回调
-	 * 
-	 * @author freeson
-	 */
-	public interface TouchListener {
+    @Override
+    public void computeScroll() {
+        super.computeScroll();
+        if (mScroller.computeScrollOffset()) {
+            mScrollerView.scrollTo(mScroller.getCurrX(), mScroller.getCurrY());
+            postInvalidate();
+        } else if (mScroller.isFinished() && mListener != null && mTouchResult != MOVE_NO_RESULT) {
+//			活动结束 显示更新view
+            if (mTouchResult == MOVE_TO_LEFT) {
+                if (currentTopView != null) {
+                    removeView(currentTopView);
+                }
+                currentTopView = mScrollerView;
+                currentShowView = currentBottomView;
+                if (mListener.currentIsLastPage()) {
+                    final View newView = mListener.createView(mTouchResult);
+                    currentBottomView = newView;
+                    addView(currentBottomView, 0);
+                } else {
+                    currentBottomView = new View(getContext());
+                    currentBottomView.setVisibility(View.GONE);
+                    addView(currentBottomView, 0);
+                }
+            } else {
+                if (currentBottomView != null) {
+                    removeView(currentBottomView);
+                }
+                currentBottomView = currentShowView;
+                currentShowView = mScrollerView;
+                if (mListener.currentIsFirstPage()) {
+                    final View newView = mListener.createView(mTouchResult);
+                    currentTopView = newView;
+                    currentTopView.scrollTo(-screenWidth, 0);
+                    addView(currentTopView);
+                } else {
+                    currentTopView = new View(getContext());
+                    currentTopView.scrollTo(-screenWidth, 0);
+                    currentTopView.setVisibility(View.GONE);
+                    addView(currentTopView);
+                }
+            }
+            mTouchResult = MOVE_NO_RESULT;
+        }
+    }
 
-		/** 手指向左滑动，即查看下一章节 */
-		final int MOVE_TO_LEFT = 0;
-		/** 手指向右滑动，即查看上一章节 */
-		final int MOVE_TO_RIGHT = 1;
+    private void obtainVelocityTracker(MotionEvent event) {
+        if (mVelocityTracker == null) {
+            mVelocityTracker = VelocityTracker.obtain();
+        }
+        mVelocityTracker.addMovement(event);
+    }
 
-		/**
-		 * 创建一个承载Text的View
-		 * 
-		 * @param direction
-		 *            {@link MOVE_TO_LEFT,MOVE_TO_RIGHT}
-		 * @return
-		 */
-		public View createView(final int direction);
-
-		/***
-		 * 当前页是否是第一页
-		 * 
-		 * @return
-		 */
-		public boolean currentIsFirstPage();
-
-		/***
-		 * 当前页是否是最后一页
-		 * 
-		 * @return
-		 */
-		public boolean currentIsLastPage();
-
-		/**
-		 * 当前页是否有上一页（用来判断可滑动性）
-		 * 
-		 * @return
-		 */
-		public boolean whetherHasPreviousPage();
-
-		/***
-		 * 当前页是否有下一页（用来判断可滑动性）
-		 * 
-		 * @return
-		 */
-		public boolean whetherHasNextPage();
-	}
+    private void releaseVelocityTracker() {
+        if (mVelocityTracker != null) {
+            mVelocityTracker.recycle();
+            mVelocityTracker = null;
+        }
+    }
 
 }

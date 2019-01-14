@@ -76,23 +76,29 @@ public class BookUtils {
      * @throws IOException
      */
     public static List<BookSource> getBookSource(String bookId) throws IOException {
-        List<BookSource> sourceList = new ArrayList<>();
-        Request request = new Request.Builder().url(AppConstant.BOOK_SOURCE.replace("bookId",bookId)).build();
-        Call call = getInstance().newCall(request);
-        String result = call.execute().body().string();
-        List<Map<String, Object>> maps = JSONUtils.GsonToListMaps(result);
-        if(maps !=null){
-            for(Map<String,Object> map:maps){
-                BookSource bookSource =JSONUtils.GsonObjToBean(map,BookSource.class) ;
-                sourceList.add(bookSource);
-            }
-        }
+        //先查缓存
+        List<BookSource> sourceList = (List<BookSource>) DiskLruCacheHelper.getInstance().getAsSerializable(AppConstant.CACHE_BOOK_SOURCE_ID+bookId);
+         if(sourceList == null ){
+             sourceList  = new ArrayList<>();
+             Request request = new Request.Builder().url(AppConstant.BOOK_SOURCE.replace("bookId",bookId)).build();
+             Call call = getInstance().newCall(request);
+             String result = call.execute().body().string();
+             List<Map<String, Object>> maps = JSONUtils.GsonToListMaps(result);
+             if(maps !=null){
+                 for(Map<String,Object> map:maps){
+                     BookSource bookSource =JSONUtils.GsonObjToBean(map,BookSource.class) ;
+                     sourceList.add(bookSource);
+                 }
+             }
+         }
         return sourceList;
     }
 
 
+
+
     /**
-     * 获取章节信息 由书籍来源id 提供
+     * 实时获取章节信息 由书籍来源id 提供 bookId
      * @param bookId
      * @return
      */
@@ -128,6 +134,32 @@ public class BookUtils {
         Map<String, Object> stringObjectMap = JSONUtils.GsonToMaps(result);
         return JSONUtils.GsonObjToBean( stringObjectMap.get("chapter"),ChapterText.class);
     }
+
+
+    /**
+     * 根据书籍来源id 获取 章节列表 默认第一章内容
+     * @return
+     */
+    public static ChapterText getChapterTextByChapterList(String bookId) throws IOException {
+        List<BookChapter> bookChapterList = getBookChapterList(bookId);
+        if(bookChapterList !=null){
+            return getBookChapterText(bookChapterList.get(0).getLink());
+        }
+        return null;
+    }
+    /**
+     * 所需章节 无效 返回为空
+     * 根据书籍来源id 获取 章节列表 获取 i 章内容
+     * @return
+     */
+    public static ChapterText getChapterTextByChapterList(String bookId,int i) throws IOException {
+        List<BookChapter> bookChapterList = getBookChapterList(bookId);
+        if(bookChapterList !=null &&  i > 0  && bookChapterList.size() >= i  ){
+            return getBookChapterText(bookChapterList.get(i).getLink());
+        }
+        return null;
+    }
+
 
 
 }

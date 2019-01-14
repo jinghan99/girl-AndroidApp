@@ -9,10 +9,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
 import com.example.jingh.myapplication.entiy.BookChapter;
 import com.example.jingh.myapplication.entiy.BookInfo;
 import com.example.jingh.myapplication.entiy.BookSource;
 import com.example.jingh.myapplication.entiy.ChapterText;
+import com.example.jingh.myapplication.entiy.TxtPage;
+import com.example.jingh.myapplication.listener.TouchListener;
 import com.example.jingh.myapplication.utils.BookUtils;
 import com.example.jingh.myapplication.utils.Utils;
 import com.example.jingh.myapplication.view.FlipperLayout;
@@ -26,10 +29,11 @@ import java.util.List;
  * @author: jingh
  * @date 2019/1/10 17:29
  */
-public class ChapterTextActivityThree extends Activity implements View.OnClickListener, FlipperLayout.TouchListener {
-    //    当前显示文字
-    private String text       = "";
-    private int    textLenght = 0;
+public class ChapterTextActivityThree extends Activity implements View.OnClickListener, TouchListener {
+    //    textView 显示文字
+    private String text = "";
+
+    private int textLenght = 0;
 
     private static final int COUNT = 400;
 
@@ -39,23 +43,65 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
 
     private int currentBottomEndIndex = 0;
 
+    // 当前章节列表
     private List<BookChapter> bookChapterList;
-    private BookInfo          bookInfo;
 
+    /**
+     * 当前章节索引
+     */
+    private int chapterIndex = 0;
+
+
+    /**
+     * 书信息
+     */
+    private BookInfo bookInfo;
+
+    /**
+     * 上一章节
+     */
+    private ChapterText previousShowChapter;
+
+    /**
+     * 当前显示的章节
+     */
+    private ChapterText currentShowChapter;
+
+    /**
+     * 下一章节
+     */
+    private ChapterText nextShowChapter;
+
+    // 上一章的页面列表缓存
+    private List<TxtPage> mPrePageList;
+    // 当前章节的页面列表
+    private List<TxtPage> mCurPageList;
+    // 下一章的页面列表缓存
+    private List<TxtPage> mNextPageList;
+
+
+
+
+    /**
+     *  * @param currentBottomView 最底层的view，初始状态看不到
+     * 	 * @param currentShowView 正在显示的View
+     * 	 * @param currentTopView 最上层的View，初始化时滑出屏幕
+     */
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
             FlipperLayout rootLayout = (FlipperLayout) findViewById(R.id.book_container);
-            View recoverView = LayoutInflater.from(ChapterTextActivityThree.this).inflate(R.layout.book_text, null);
-            View view1 = LayoutInflater.from(ChapterTextActivityThree.this).inflate(R.layout.book_text, null);
-            View view2 = LayoutInflater.from(ChapterTextActivityThree.this).inflate(R.layout.book_text, null);
-            rootLayout.initFlipperViews(ChapterTextActivityThree.this, view2, view1, recoverView);
+
+            View currentTopView = LayoutInflater.from(ChapterTextActivityThree.this).inflate(R.layout.book_text, null);
+            View currentShowView = LayoutInflater.from(ChapterTextActivityThree.this).inflate(R.layout.book_text, null);
+            View currentBottomView = LayoutInflater.from(ChapterTextActivityThree.this).inflate(R.layout.book_text, null);
+            rootLayout.initFlipperViews(ChapterTextActivityThree.this, currentBottomView, currentShowView, currentTopView);
             textLenght = text.length();
             System.out.println("----textLenght----->" + textLenght);
 
-            TextView textView = (TextView) view1.findViewById(R.id.chapter_text_body);
+            TextView textView = (TextView) currentShowView.findViewById(R.id.chapter_text_body);
             if (textLenght > COUNT) {
                 textView.setText(text.subSequence(0, COUNT));
-                textView = (TextView) view2.findViewById(R.id.chapter_text_body);
+                textView = (TextView) currentBottomView.findViewById(R.id.chapter_text_body);
                 if (textLenght > (COUNT << 1)) {
                     textView.setText(text.subSequence(COUNT, COUNT * 2));
                     currentShowEndIndex = COUNT;
@@ -72,6 +118,13 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
             }
         }
     };
+
+    /**
+     * 初始化 章节内容
+     */
+    private void loadPageList(){
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +143,12 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
      * 创建一个承载Text的View
      *
      * @param direction
-     *
      * @return
      */
     @Override
     public View createView(final int direction) {
         String txt = "";
-        if (direction == FlipperLayout.TouchListener.MOVE_TO_LEFT) {
+        if (direction == TouchListener.MOVE_TO_LEFT) {
             currentTopEndIndex = currentShowEndIndex;
             final int nextIndex = currentBottomEndIndex + COUNT;
             currentShowEndIndex = currentBottomEndIndex;
@@ -121,6 +173,7 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
         System.out.println("-top->" + currentTopEndIndex + "-show->" + currentShowEndIndex + "--bottom-->" + currentBottomEndIndex);
         return view;
     }
+
     /**
      * 当前页是否有上一页（用来判断可滑动性）
      *
@@ -128,8 +181,10 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
      */
     @Override
     public boolean whetherHasPreviousPage() {
-        return currentShowEndIndex > COUNT;
+        boolean flag = currentShowEndIndex > COUNT;
+        return flag;
     }
+
     /***
      * 当前页是否有下一页（用来判断可滑动性）
      *
@@ -137,8 +192,18 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
      */
     @Override
     public boolean whetherHasNextPage() {
-        return currentShowEndIndex < textLenght;
+        boolean flag =  currentShowEndIndex < textLenght;
+        if(!flag){
+//            若没有下一页 检测是否有下一章
+            if(nextShowChapter !=null){
+//                下一章有内容
+
+            }
+        }
+
+        return flag;
     }
+
     /***
      * 当前页是否是第一页
      *
@@ -154,6 +219,7 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
         }
         return should;
     }
+
     /***
      * 当前页是否是最后一页
      *
@@ -192,14 +258,17 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
             try {
                 List<BookSource> bookSource = BookUtils.getBookSource(bookInfo.get_id());
                 if (bookSource.size() > 1) {
-                    String sourceId = bookSource.get(1).get_id();
-                    bookChapterList = BookUtils.getBookChapterList(sourceId);
-                    if (bookChapterList != null && bookChapterList.size() > 0) {
-                        String link = bookChapterList.get(0).getLink();
-                        return BookUtils.getBookChapterText(Utils.getURLEncoderString(link));
-                    }
+                    bookChapterList = BookUtils.getBookChapterList(bookSource.get(1).get_id());
+                    previousShowChapter =  BookUtils.getChapterTextByChapterList(bookSource.get(1).get_id(),chapterIndex-1);
+                    currentShowChapter =  BookUtils.getChapterTextByChapterList(bookSource.get(1).get_id());
+                    nextShowChapter = BookUtils.getChapterTextByChapterList(bookSource.get(1).get_id(), chapterIndex + 1);
+                }else{
+                    bookChapterList = BookUtils.getBookChapterList(bookSource.get(0).get_id());
+                    previousShowChapter =  BookUtils.getChapterTextByChapterList(bookSource.get(0).get_id(),chapterIndex-1);
+                    currentShowChapter =  BookUtils.getChapterTextByChapterList(bookSource.get(0).get_id());
+                    nextShowChapter = BookUtils.getChapterTextByChapterList(bookSource.get(0).get_id(), chapterIndex + 1);
                 }
-                return null;
+                return currentShowChapter;
             } catch (IOException e) {
                 return null;
             }
@@ -218,7 +287,6 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
             if (chapterText != null) {
                 text = chapterText.getBody();
                 handler.sendEmptyMessage(0);
-
             }
         }
     }
