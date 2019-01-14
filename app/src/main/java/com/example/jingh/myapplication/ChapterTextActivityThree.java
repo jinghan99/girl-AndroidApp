@@ -35,6 +35,8 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
 
     private int textLenght = 0;
 
+    private int textViewLine = 5;
+
     private static final int COUNT = 400;
 
     private int currentTopEndIndex = 0;
@@ -99,6 +101,7 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
             System.out.println("----textLenght----->" + textLenght);
 
             TextView textView = (TextView) currentShowView.findViewById(R.id.chapter_text_body);
+
             if (textLenght > COUNT) {
                 textView.setText(text.subSequence(0, COUNT));
                 textView = (TextView) currentBottomView.findViewById(R.id.chapter_text_body);
