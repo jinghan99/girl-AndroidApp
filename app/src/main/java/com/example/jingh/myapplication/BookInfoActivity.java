@@ -140,10 +140,9 @@ public class BookInfoActivity extends Activity {
         protected List<BookChapter> doInBackground(String... ids) {
             try {
                 List<BookSource> bookSource = BookUtils.getBookSource(bookInfo.get_id());
-                if(bookSource.size()>1){
-                    String sourceId =bookSource.get(1).get_id();
-                    bookChapterList = BookUtils.getBookChapterList(sourceId);
-                }
+                int index = bookSource.size() > 0 ? 1 : 0;
+                String sourceId =bookSource.get(index).get_id();
+                bookChapterList = BookUtils.getBookChapterList(sourceId);
                 return null;
             } catch (IOException e) {
                 return null;

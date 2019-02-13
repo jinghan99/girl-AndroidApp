@@ -52,8 +52,7 @@ public class JustifyTextViewHelp extends android.support.v7.widget.AppCompatText
         for (int i = 0; i < layout.getLineCount(); i++) {
             int lineStart = layout.getLineStart(i);
             int lineEnd = layout.getLineEnd(i);
-            float width = StaticLayout.getDesiredWidth(text, lineStart,
-                    lineEnd, getPaint());
+            float width = StaticLayout.getDesiredWidth(text, lineStart,lineEnd, getPaint());
             String line = text.substring(lineStart, lineEnd);
 
             if (i < layout.getLineCount() - 1) {
@@ -69,8 +68,7 @@ public class JustifyTextViewHelp extends android.support.v7.widget.AppCompatText
         }
     }
 
-    private void drawScaledText(Canvas canvas, int lineStart, String line,
-                                float lineWidth) {
+    private void drawScaledText(Canvas canvas, int lineStart, String line,float lineWidth) {
         float x = 0;
         if (isFirstLineOfParagraph(lineStart, line)) {
             String blanks = "  ";

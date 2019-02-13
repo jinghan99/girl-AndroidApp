@@ -35,9 +35,8 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
 
     private int textLenght = 0;
 
-    private int textViewLine = 5;
 
-    private static final int COUNT = 400;
+    private static final int COUNT = 350;
 
     private int currentTopEndIndex = 0;
 
@@ -76,10 +75,13 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
 
     // 上一章的页面列表缓存
     private List<TxtPage> mPrePageList;
+
     // 当前章节的页面列表
     private List<TxtPage> mCurPageList;
+
     // 下一章的页面列表缓存
     private List<TxtPage> mNextPageList;
+
 
 
 
@@ -120,6 +122,7 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
                 currentBottomEndIndex = textLenght;
             }
         }
+
     };
 
     /**
