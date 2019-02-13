@@ -3,6 +3,7 @@ package com.example.jingh.myapplication.adapter;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;
 import android.view.ViewGroup;
 import com.example.jingh.myapplication.fragment.ChapterTextFragment;
@@ -25,7 +26,9 @@ public class ChapterTextFragmentStatePagerAdapter extends FragmentStatePagerAdap
         super(fm);
         this.fragments = fragments;
     }
-
+    public void setLists(List<ChapterTextFragment> list) {
+        this.fragments = list;
+    }
     public void addFragment(ChapterTextFragment fragment) {
         if (fragments != null) {
             fragments.add(fragment);
@@ -59,5 +62,11 @@ public class ChapterTextFragmentStatePagerAdapter extends FragmentStatePagerAdap
     public Fragment getCurrentFragment() {
         return mCurrentFragment;
     }
+    @Override
+    public int getItemPosition(Object object) {
+        //注意：默认是PagerAdapter.POSITION_UNCHANGED，不会重新加载 动态添加删除 重新加载
+        return PagerAdapter.POSITION_NONE;
+    }
+
 
 }

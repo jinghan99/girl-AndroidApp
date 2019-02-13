@@ -30,7 +30,7 @@ import java.util.List;
 
 /**
  * @Package com.example.jingh.myapplication.activity
- * @Description: TODO
+ * @Description: 书籍详情页
  * @author: jingh
  * @date 2019/1/8 15:10
  */
@@ -62,7 +62,7 @@ public class BookInfoActivity extends Activity {
         initListener();
 
         //加载章节信息
-//        new BookInfoActivity.BookDataTask().execute(bookInfo.get_id());
+       new BookInfoActivity.BookDataTask().execute(bookInfo.get_id());
 
     }
 
@@ -109,9 +109,9 @@ public class BookInfoActivity extends Activity {
             @Override
             public void onClick(View v) {
 //                开始阅读
-                Intent intent=new Intent(context,ChapterTextActivityThree.class);
+                Intent intent=new Intent(context, ChapterTextActivityNew .class);
                 intent.putExtra("bookInfo", (Serializable) bookInfo);
-                intent.putExtra("bookChapterList", (Serializable) bookChapterList);
+
                 startActivity(intent);
             }
         });

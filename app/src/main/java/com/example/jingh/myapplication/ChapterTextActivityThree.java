@@ -15,6 +15,7 @@ import com.example.jingh.myapplication.entiy.BookInfo;
 import com.example.jingh.myapplication.entiy.BookSource;
 import com.example.jingh.myapplication.entiy.ChapterText;
 import com.example.jingh.myapplication.entiy.TxtPage;
+import com.example.jingh.myapplication.helper.JustifyTextViewHelp;
 import com.example.jingh.myapplication.listener.TouchListener;
 import com.example.jingh.myapplication.utils.BookUtils;
 import com.example.jingh.myapplication.utils.Utils;
@@ -102,11 +103,11 @@ public class ChapterTextActivityThree extends Activity implements View.OnClickLi
             textLenght = text.length();
             System.out.println("----textLenght----->" + textLenght);
 
-            TextView textView = (TextView) currentShowView.findViewById(R.id.chapter_text_body);
+            JustifyTextViewHelp textView = (JustifyTextViewHelp) currentShowView.findViewById(R.id.chapter_text_body);
 
             if (textLenght > COUNT) {
                 textView.setText(text.subSequence(0, COUNT));
-                textView = (TextView) currentBottomView.findViewById(R.id.chapter_text_body);
+                textView = (JustifyTextViewHelp) currentBottomView.findViewById(R.id.chapter_text_body);
                 if (textLenght > (COUNT << 1)) {
                     textView.setText(text.subSequence(COUNT, COUNT * 2));
                     currentShowEndIndex = COUNT;
