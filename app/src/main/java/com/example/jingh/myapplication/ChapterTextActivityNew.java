@@ -80,7 +80,7 @@ public class ChapterTextActivityNew extends FragmentActivity {
 //           添加空白页
            ChapterTextFragment textFragment = new ChapterTextFragment();
            Bundle bundle = new Bundle();
-           bundle.putString("position", "");//这里的values就是我们要传的值
+           bundle.putString("position", "添加空白页");//这里的values就是我们要传的值
            bundle.putString("title",chapterText.getTitle());
            textFragment.setArguments(bundle);
            listTextFragment.add(textFragment);
@@ -142,7 +142,6 @@ public class ChapterTextActivityNew extends FragmentActivity {
 //                    获取下一章节
                     if(bookChapterList.size() > chapterPosition+1){
                         System.out.println("滑动右边边界" + position +";"+textList.size());
-                        System.out.println("arg1 :"+arg1 +"  arg2 :"+arg2);
                         chapterPosition +=1;
                         new ChapterTextActivityNew.BookDataTask().execute(bookInfo.get_id());
                         viewPager.setCurrentItem(0); //设置viewpage显示第0个
